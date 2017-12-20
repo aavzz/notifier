@@ -76,11 +76,11 @@ func ConfigPidFile() string {
 func ConfigCfgFile() string {
 	return cmdLnOpts.cfgfile
 }
-
+/*
 func ConfigSmtpServerAddress() string {
 	return cfgFile.smtp.address
 }
 
 func ConfigSmtpServerPort() uint16 {
 	return cfgFile.smtp.port
-}
+}*/
