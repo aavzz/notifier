@@ -5,6 +5,7 @@ package main
  */
 
 import (
+	"os"
 	"net/http"
 	. "github.com/aavzz/notifier/setup"
 )
