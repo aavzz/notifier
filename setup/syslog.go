@@ -15,7 +15,7 @@ var SysLog *syslog.Writer
 
 func initLogging() {
 	var err error
-	SysLog, err = syslog.New(syslog.LOG_INFO|syslog.LOG_DAEMON, "stub-server")
+	SysLog, err = syslog.New(syslog.LOG_INFO|syslog.LOG_DAEMON, "notifier")
 	if err != nil {
 		fmt.Printf("Cannot initialize logging: %s\n", err)
 		os.Exit(1)
