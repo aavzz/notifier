@@ -65,6 +65,10 @@ func Setup() {
 
 }
 
+func ConfigAddress() string {
+	return cmdLnOpts.address
+}
+
 func ConfigPidFile() string {
 	return cmdLnOpts.pidfile
 }
