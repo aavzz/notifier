@@ -38,7 +38,7 @@ func readConfig() {
 			cfgFile.beeline.login = cfg.Section("beeline").Key("login").String()
 		}
 		if cfg.Section("beeline").HasKey("password") {
-			p, err := cfg.Section("beeline").Key("password").String()
+			cfgFile.beeline.login = cfg.Section("beeline").Key("password").String()
 		}
 	}
 
