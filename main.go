@@ -18,7 +18,11 @@ func main() {
 	//just some event loop
 	//newer mind that it does not do anything useful 
 	http.HandleFunc("/", handler)
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(ConfigAddress(), nil)
+	if err != nil {
+		SysLog.Err(err)
+		os.Exit(1)
+	}
 
 }
 
