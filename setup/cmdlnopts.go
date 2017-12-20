@@ -17,8 +17,8 @@ type commandLineOptions struct {
 var cmdLnOpts commandLineOptions
 
 func parseCmdLine() {
-	c := getopt.StringLong("cfg", 'c', "/etc/stub-server.conf", "configuration file")
-	p := getopt.StringLong("pid", 'p', "/var/run/stub-server.pid", "PID file")
+	c := getopt.StringLong("cfg", 'c', "/etc/notifier.conf", "configuration file")
+	p := getopt.StringLong("pid", 'p', "/var/run/notifier.pid", "PID file")
 	getopt.Parse()
 	cmdLnOpts.cfgfile = *c
 	cmdLnOpts.pidfile = *p
