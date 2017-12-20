@@ -20,7 +20,7 @@ func main() {
 	http.HandleFunc("/", handler)
 	err := http.ListenAndServe(ConfigAddress(), nil)
 	if err != nil {
-		SysLog.Err(err)
+		SysLog.Err(err.Error())
 		os.Exit(1)
 	}
 
