@@ -7,7 +7,11 @@ include (
 )
 
 func sendMessage(numbers string, message string) {
-    
+  
+  headers := map[string]string{
+		"Content-Type": "pplication/x-www-form-urlencoded; charset=windows-1251"
+	}
+  
   parameters := url.Values{}
   parameters.Add("user", ConfigBeelineLogin())
   parameters.Add("pass", ConfigBeelinePassword())
@@ -20,7 +24,7 @@ func sendMessage(numbers string, message string) {
   
   c := new(http.Client)
 
-  status, _, r, err := c.Post("https://beeline.amega-inform.ru/sendsms/", nil, parameters.Encode())
+  status, _, r, err := c.Post("https://beeline.amega-inform.ru/sendsms/", headers,ters.Encode())
   if err != nil {
     SysLog.Err(err.Error())
   }
