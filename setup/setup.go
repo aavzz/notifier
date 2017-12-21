@@ -6,11 +6,18 @@ package setup
  */
 
 import (
-	"fmt"
 	"os"
-	"os/signal"
-	"syscall"
+	"fmt"
 	"time"
+	"syscall"
+	"os/signal"
+	. "github.com/aavzz/notifier/setup/http"
+	. "github.com/aavzz/notifier/setup/daemon"
+	. "github.com/aavzz/notifier/setup/signal"
+	. "github.com/aavzz/notifier/setup/syslog"
+	. "github.com/aavzz/notifier/setup/pidfile"
+	. "github.com/aavzz/notifier/setup/cfgfile"
+	. "github.com/aavzz/notifier/setup/cmdlnopts"
 )
 
 func Setup() {
@@ -30,10 +37,10 @@ func Setup() {
 		//checks command line args, config file and double invocation
 		//writes errors to stdout
 		//and gets the coffin ready
-		parseCmdLine()
-		writePid()
-		readConfig()
-		initLogging()
+		ParseCmdLine()
+		WritePid()
+		ReadConfig()
+		InitLogging()
 
 		<-sigterm
 		os.Exit(0)
@@ -55,12 +62,12 @@ func Setup() {
 	//child's output goes to /dev/null
 	//we processed this in parent just to check for correctness
 	//real configuration happens here
-	parseCmdLine()
-	writePid()
-	readConfig()
-	initLogging()
+	ParseCmdLine()
+	WritePid()
+	ReadConfig()
+	InitLogging()
 
 	//rest of initialization
-	signalHandling()
-	initHttp()
+	SignalHandling()
+	InitHttp()
 }

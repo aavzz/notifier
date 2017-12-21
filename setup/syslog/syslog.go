@@ -1,4 +1,4 @@
-package setup
+package syslog
 
 /*
  * this code runs both in parent and child
@@ -13,7 +13,7 @@ import (
 
 var SysLog *syslog.Writer
 
-func initLogging() {
+func InitLogging() {
 	var err error
 	SysLog, err = syslog.New(syslog.LOG_INFO|syslog.LOG_DAEMON, "notifier")
 	if err != nil {
@@ -21,3 +21,4 @@ func initLogging() {
 		os.Exit(1)
 	}
 }
+

@@ -1,4 +1,4 @@
-package setup
+package pidfile
 
 /*
  * this code runs both in parent and child
@@ -6,14 +6,16 @@ package setup
  */
 
 import (
+	"os"
 	"fmt"
 	"github.com/tabalt/pidfile"
-	"os"
+	. "github.com/aavzz/notifier/setup/syslog"
+	. "github.com/aavzz/notifier/setup/cmdlnopts"
 )
 
 var p *pidfile.PidFile
 
-func writePid() {
+func WritePid() {
 	p = pidfile.NewPidFile(cmdLnOpts.pidfile)
 	oldpid, err := p.ReadPidFromFile(p.File)
 	if err == nil && oldpid.ProcessExist() {
@@ -34,3 +36,4 @@ func writePid() {
 func RemovePidFile() {
 	p.Clear()
 }
+

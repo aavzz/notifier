@@ -1,4 +1,4 @@
-package setup
+package cfgfile
 
 /*
  * this code runs both in parent and child
@@ -6,9 +6,10 @@ package setup
  */
 
 import (
+	"os"
 	"fmt"
 	"github.com/go-ini/ini"
-	"os"
+	. "github.com/aavzz/notifier/setup/cmdlnopts"
 )
 
 type beelineSection struct {
@@ -23,7 +24,9 @@ type configurationFile struct {
 
 var cfgFile configurationFile
 
-func readConfig() {
+// Package exported objects
+
+func ReadConfig() {
 
 	cfg, err := ini.Load(cmdLnOpts.cfgfile)
 
@@ -44,8 +47,6 @@ func readConfig() {
 	}
 
 }
-
-// Package exported objects
 
 func ConfigBeelineLogin() string {
 	return cfgFile.beeline.login

@@ -1,4 +1,4 @@
-package setup
+package daemon
 
 /*
  * this code runs both in parent and child
@@ -10,7 +10,7 @@ import (
 	"syscall"
 )
 
-func daemonize() (*os.Process, error) {
+func Daemonize() (*os.Process, error) {
 
 	daemonState := os.Getenv("_GO_DAEMON_STATE")
 	switch daemonState {
@@ -41,5 +41,5 @@ func daemonize() (*os.Process, error) {
 	}
 
 	return p, nil
-
 }
+

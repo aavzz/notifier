@@ -1,12 +1,13 @@
-package setup
+package signal
 
 import (
 	"os"
 	"os/signal"
 	"syscall"
+        . "github.com/aavzz/notifier/setup/syslog"
 )
 
-func signalHandling() {
+func SignalHandling() {
 
 	sigusr1 := make(chan os.Signal, 1)
 	sighup := make(chan os.Signal, 1)

@@ -1,13 +1,14 @@
-package setup
+package http
 
 import (
 	"os"
 	"net/http"
 	"github.com/gorilla/mux"
 	"github.com/aavzz/notifier/rest/api1"
+	. "github.com/aavzz/notifier/setup/syslog"
 )
 
-func initHttp() {
+func InitHttp() {
 	r := mux.NewRouter()
 	r.HandleFunc("/api1", api1.Handler).Methods("GET")
   
@@ -16,5 +17,5 @@ func initHttp() {
 		SysLog.Err(err.Error())
 		os.Exit(1)
 	}
-  
 }
+

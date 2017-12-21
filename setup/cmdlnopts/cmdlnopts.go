@@ -1,4 +1,4 @@
-package setup
+package cmdlnopts
 
 /*
  * this code runs both in parent and child
@@ -17,7 +17,9 @@ type commandLineOptions struct {
 
 var cmdLnOpts commandLineOptions
 
-func parseCmdLine() {
+// Package exported objects
+
+func ParseCmdLine() {
 	a := getopt.StringLong("addr", 'a', "127.0.0.1:8080", "address and port to bind to")
 	c := getopt.StringLong("cfg", 'c', "/etc/notifier.conf", "configuration file")
 	p := getopt.StringLong("pid", 'p', "/var/run/notifier.pid", "PID file")
@@ -26,8 +28,6 @@ func parseCmdLine() {
 	cmdLnOpts.cfgfile = *c
 	cmdLnOpts.pidfile = *p
 }
-
-// Package exported objects
 
 func ConfigAddress() string {
 	return cmdLnOpts.address
