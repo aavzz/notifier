@@ -64,12 +64,3 @@ func Setup() {
 	signalHandling()
 
 }
-
-/*
-func ConfigSmtpServerAddress() string {
-	return cfgFile.smtp.address
-}
-
-func ConfigSmtpServerPort() uint16 {
-	return cfgFile.smtp.port
-}*/
