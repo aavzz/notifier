@@ -9,8 +9,9 @@ include (
 func sendMessage(numbers string, message string) {
     
   parameters := url.Values{}
-  parameters.Add("user", "")
-  parameters.Add("pass", "")
+  parameters.Add("user", ConfigBeelineLogin())
+  parameters.Add("pass", ConfigBeelinePassword())
+  parameters.Add("sender", ConfigBeelineSender())
   parameters.Add("action", "post_sms")
   parameters.Add("target", numbers)
   parameters.Add("message", message)
