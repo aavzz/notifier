@@ -23,16 +23,16 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			msg := message[:l]
 			if phones != "" && msg != "" {
 				sendMessageBeeline(phones, msg)
+				SysLog.Info(fmt.Sprintf("Message '%s' sent via beeline to %s", msg, phones))
+			} else {
+				SysLog.Info(fmt.Sptintf("Failed to send message via beeline))
 			}
 		case "email":
 		
 		case "telegram":
 
 		default:
-		
+			SysLog("No valid channel found")	
 	}
-	
-	
-	
-	fmt.Fprintf(w, "Hello World!")
+		
 }
