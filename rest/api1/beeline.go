@@ -6,7 +6,7 @@ include (
 	"github.com/gorilla/http"
 )
 
-func sendMessage(numbers string, message string) {
+func sendMessageBeeline(numbers string, message string) {
   
 	headers := map[string]string{
 	  "Content-Type": {"application/x-www-form-urlencoded; charset=windows-1251"}
