@@ -16,7 +16,7 @@ import (
 var p *pidfile.PidFile
 
 func WritePid() {
-	p = pidfile.NewPidFile(cmdLnOpts.pidfile)
+	p = pidfile.NewPidFile(ConfigPidFile())
 	oldpid, err := p.ReadPidFromFile(p.File)
 	if err == nil && oldpid.ProcessExist() {
 		fmt.Println("Another process is already running")
