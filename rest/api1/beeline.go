@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/url"
 	"github.com/gorilla/http"
+	. "github.com/aavzz/notifier/setup"
 )
 
 func sendMessageBeeline(numbers string, message string) {
