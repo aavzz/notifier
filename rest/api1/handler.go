@@ -13,7 +13,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	switch channel {
 		case "beeline":
-			re := regexp.MustCompile("+7\d{10},")
+			re := regexp.MustCompile(`+7\d{10},`)
 		//check recipients
 		//check message (480 symbols)
 		case "email":
