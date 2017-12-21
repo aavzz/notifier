@@ -26,3 +26,17 @@ func parseCmdLine() {
 	cmdLnOpts.cfgfile = *c
 	cmdLnOpts.pidfile = *p
 }
+
+// Package exported objects
+
+func ConfigAddress() string {
+	return cmdLnOpts.address
+}
+
+func ConfigPidFile() string {
+	return cmdLnOpts.pidfile
+}
+
+func ConfigCfgFile() string {
+	return cmdLnOpts.cfgfile
+}
