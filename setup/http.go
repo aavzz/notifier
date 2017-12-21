@@ -3,11 +3,12 @@ package setup
 import (
 	"os"
 	"github.com/gorilla/mux"
+	"github.com/aavzz/rest/api1"
 )
 
 func initHttp() {
 	r := mux.NewRouter()
-	r.HandleFunc("/api-1", handler).Methods("GET")
+	r.HandleFunc("/api1", api1.handler).Methods("GET")
   
 	err := http.ListenAndServe(ConfigAddress(), r)
 	if err != nil {
@@ -15,8 +16,4 @@ func initHttp() {
 		os.Exit(1)
 	}
   
-}
-
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello World!")
 }
