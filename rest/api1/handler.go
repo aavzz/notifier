@@ -25,7 +25,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 				sendMessageBeeline(phones, msg)
 				SysLog.Info(fmt.Sprintf("Message '%s' sent via beeline to %s", msg, phones))
 			} else {
-				SysLog.Info(fmt.Sptintf("Failed to send message via beeline))
+				SysLog.Info(fmt.Sptintf("Failed to send message via beeline"))
 			}
 		case "email":
 		
