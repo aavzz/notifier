@@ -6,6 +6,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/aavzz/notifier/rest/api1"
 	. "github.com/aavzz/notifier/setup/syslog"
+	. "github.com/aavzz/notifier/setup/cmdlnopts"
 )
 
 func InitHttp() {
