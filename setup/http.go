@@ -2,6 +2,7 @@ package setup
 
 import (
 	"os"
+	"net/http"
 	"github.com/gorilla/mux"
 	"github.com/aavzz/rest/api1"
 )
