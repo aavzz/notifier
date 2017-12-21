@@ -24,7 +24,7 @@ func sendMessage(numbers string, message string) {
   
   c := new(http.Client)
 
-  status, _, r, err := c.Post("https://beeline.amega-inform.ru/sendsms/", headers,ters.Encode())
+  status, _, r, err := c.Post("https://beeline.amega-inform.ru/sendsms/", headers, parameters.Encode())
   if err != nil {
     SysLog.Err(err.Error())
   }
