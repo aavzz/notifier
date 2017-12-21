@@ -33,7 +33,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		case "telegram":
 
 		default:
-			SysLog("No valid channel found")	
+			SysLog.Info("No valid channel found")	
 	}
 		
 }
