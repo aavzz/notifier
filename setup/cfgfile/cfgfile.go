@@ -15,7 +15,7 @@ import (
 type beelineSection struct {
 	login    string
 	password string
-	senser   string
+	sender   string
 }
 
 type configurationFile struct {
