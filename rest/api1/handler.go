@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func Handler(w http.ResponseWriter, r *http.Request) {
 	channel := r.FormValue("channel")
 	recipients := r.FormValue("recipients")
 	message := r.FormValue("message")
