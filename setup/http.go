@@ -4,7 +4,7 @@ import (
 	"os"
 	"net/http"
 	"github.com/gorilla/mux"
-	"github.com/aavzz/rest/api1"
+	"github.com/aavzz/notifier/rest/api1"
 )
 
 func initHttp() {
