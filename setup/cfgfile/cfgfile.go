@@ -28,10 +28,10 @@ var cfgFile configurationFile
 
 func ReadConfig() {
 
-	cfg, err := ini.Load(CmdLnOpts.cfgfile)
+	cfg, err := ini.Load(ConfigCfgFile())
 
 	if err != nil {
-		fmt.Printf("Cannot read configuration file %s: %s\n", cmdLnOpts.cfgfile, err)
+		fmt.Printf("Cannot read configuration file %s: %s\n", ConfigCfgFile(), err)
 		os.Exit(1)
 	}
 
@@ -52,10 +52,10 @@ func ConfigBeelineLogin() string {
 	return cfgFile.beeline.login
 }
 
-func ConfigBeelinePassword() uint16 {
+func ConfigBeelinePassword() string {
 	return cfgFile.beeline.password
 }
 
-func ConfigBeelineSender() uint16 {
+func ConfigBeelineSender() string {
 	return cfgFile.beeline.sender
 }
