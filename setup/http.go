@@ -1,14 +1,15 @@
 package setup
 
 import (
-  "github.com/gorilla/mux"
+	"os"
+	"github.com/gorilla/mux"
 )
 
 func initHttp() {
-  r := mux.NewRouter()
-  r.HandleFunc("/api-1", handler).Methods("GET")
+	r := mux.NewRouter()
+	r.HandleFunc("/api-1", handler).Methods("GET")
   
-  err := http.ListenAndServe(ConfigAddress(), r)
+	err := http.ListenAndServe(ConfigAddress(), r)
 	if err != nil {
 		SysLog.Err(err.Error())
 		os.Exit(1)
