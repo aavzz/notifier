@@ -28,7 +28,7 @@ var cfgFile configurationFile
 
 func ReadConfig() {
 
-	cfg, err := ini.Load(cmdLnOpts.cfgfile)
+	cfg, err := ini.Load(CmdLnOpts.cfgfile)
 
 	if err != nil {
 		fmt.Printf("Cannot read configuration file %s: %s\n", cmdLnOpts.cfgfile, err)
