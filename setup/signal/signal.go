@@ -5,6 +5,7 @@ import (
 	"os/signal"
 	"syscall"
         . "github.com/aavzz/notifier/setup/syslog"
+	. "github.com/aavzz/notifier/setup/pidfile"
 )
 
 func SignalHandling() {
