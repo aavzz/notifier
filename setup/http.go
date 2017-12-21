@@ -9,7 +9,7 @@ import (
 
 func initHttp() {
 	r := mux.NewRouter()
-	r.HandleFunc("/api1", api1.handler).Methods("GET")
+	r.HandleFunc("/api1", api1.Handler).Methods("GET")
   
 	err := http.ListenAndServe(ConfigAddress(), r)
 	if err != nil {
