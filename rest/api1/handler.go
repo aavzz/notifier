@@ -5,6 +5,7 @@ import (
 	"regexp"
 	"strings"
 	"net/http"
+	. "github.com/aavzz/notifier/setup"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
