@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 	"net/http"
-	. "github.com/aavzz/notifier/setup"
+	. "github.com/aavzz/notifier/setup/syslog"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {

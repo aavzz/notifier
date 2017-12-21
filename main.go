@@ -7,7 +7,9 @@ package main
 import (
 	"os"
 	"net/http"
-	. "github.com/aavzz/notifier/setup/setup"
+	. "github.com/aavzz/notifier/setup"
+	. "github.com/aavzz/notifier/setup/syslog"
+	. "github.com/aavzz/notifier/setup/pidfile"
 )
 
 func main() {
