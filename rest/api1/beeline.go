@@ -8,7 +8,7 @@ import (
 
 func sendMessageBeeline(numbers string, message string) {
   
-	headers = make(map[string][]string)
+	headers := make(map[string][]string)
 	headers["Content-Type"][0] = "application/x-www-form-urlencoded; charset=windows-1251"
 	
 	parameters := url.Values{}
