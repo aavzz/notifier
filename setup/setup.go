@@ -59,6 +59,7 @@ func Setup() {
 	writePid()
 	readConfig()
 	initLogging()
+	initHttp()
 
 	//final touch
 	signalHandling()
