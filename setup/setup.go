@@ -65,17 +65,6 @@ func Setup() {
 
 }
 
-func ConfigAddress() string {
-	return cmdLnOpts.address
-}
-
-func ConfigPidFile() string {
-	return cmdLnOpts.pidfile
-}
-
-func ConfigCfgFile() string {
-	return cmdLnOpts.cfgfile
-}
 /*
 func ConfigSmtpServerAddress() string {
 	return cfgFile.smtp.address
