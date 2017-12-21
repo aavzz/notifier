@@ -14,6 +14,7 @@ import (
 type beelineSection struct {
 	login    string
 	password string
+	senser   string
 }
 
 type configurationFile struct {
@@ -52,4 +53,8 @@ func ConfigBeelineLogin() string {
 
 func ConfigBeelinePassword() uint16 {
 	return cfgFile.beeline.password
+}
+
+func ConfigBeelineSender() uint16 {
+	return cfgFile.beeline.sender
 }
