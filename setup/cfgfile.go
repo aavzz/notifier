@@ -46,11 +46,10 @@ func readConfig() {
 
 // Package exported objects
 
-/*
-func ConfigSmtpServerAddress() string {
-	return cfgFile.smtp.address
+func ConfigBeelineLogin() string {
+	return cfgFile.beeline.login
 }
 
-func ConfigSmtpServerPort() uint16 {
-	return cfgFile.smtp.port
-}*/
+func ConfigBeelinePassword() uint16 {
+	return cfgFile.beeline.password
+}
