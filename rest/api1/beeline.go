@@ -40,4 +40,5 @@ func sendMessageBeeline(numbers string, message string) {
 		defer resp.Body.Close()
 	}
 	SysLog.Info(fmt.Sprintf("Post result: %v", resp.Status))
+	SysLog.Info(fmt.Sprintf("Post result: %v", resp.Body))
 }
