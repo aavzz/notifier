@@ -20,7 +20,7 @@ var cmdLnOpts commandLineOptions
 // Package exported objects
 
 func ParseCmdLine() {
-	a := getopt.StringLong("addr", 'a', "127.0.0.1:8080", "address and port to bind to")
+	a := getopt.StringLong("addr", 'a', "0.0.0.0:8080", "address and port to bind to")
 	c := getopt.StringLong("cfg", 'c', "/etc/notifier.conf", "configuration file")
 	p := getopt.StringLong("pid", 'p', "/var/run/notifier.pid", "PID file")
 	getopt.Parse()
