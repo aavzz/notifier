@@ -42,7 +42,10 @@ func ReadConfig() {
 			cfgFile.beeline.login = cfg.Section("beeline").Key("login").String()
 		}
 		if cfg.Section("beeline").HasKey("password") {
-			cfgFile.beeline.login = cfg.Section("beeline").Key("password").String()
+			cfgFile.beeline.password = cfg.Section("beeline").Key("password").String()
+		}
+		if cfg.Section("beeline").HasKey("sender") {
+			cfgFile.beeline.sender = cfg.Section("beeline").Key("sender").String()
 		}
 	}
 
