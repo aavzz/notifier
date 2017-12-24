@@ -15,6 +15,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	switch channel {
 		case "beeline":
+			SysLog.Info("AAAAAAAAAAAAAA")
 			re := regexp.MustCompile(`+7\d{10}`)
 			phones := strings.Join(re.FindAllString(recipients, 5), ",")
 			l := len(message)
@@ -23,7 +24,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			}
 			msg := message[:l]
 			if phones != "" && msg != "" {
-				SysLog.Info(fmt.Sprintf("Message '%s' sent via beeline to %s", msg, phones))
 				sendMessageBeeline(phones, msg)
 				SysLog.Info(fmt.Sprintf("Message '%s' sent via beeline to %s", msg, phones))
 			} else {
