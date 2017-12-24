@@ -23,7 +23,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			}
 			msg := message[:l]
 			SysLog.Info("BBBBBBB")
-			if phones != nil && msg != "" {
+			SysLog.Info(phones)
+			if phones != "" && msg != "" {
 				sendMessageBeeline(phones, msg)
 				SysLog.Info(fmt.Sprintf("Message '%s' sent via beeline to %s", msg, phones))
 			} else {
