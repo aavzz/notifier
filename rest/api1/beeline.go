@@ -26,9 +26,12 @@ func sendMessageBeeline(numbers string, message string) {
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=windows-1251")
 	
-  	c := new(http.Client)
+	tr := &http.Transport{
+        	TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	c := &http.Client{Transport: tr}
 
-	resp, err := c.Do(req)
+  	resp, err := c.Do(req)
 	if err != nil {
 		SysLog.Err(err.Error())
 	}
