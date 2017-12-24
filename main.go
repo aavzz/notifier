@@ -6,7 +6,6 @@ package main
 
 import (
 	. "github.com/aavzz/notifier/setup"
-	. "github.com/aavzz/notifier/setup/syslog"
 	. "github.com/aavzz/notifier/setup/pidfile"
 )
 
