@@ -5,6 +5,7 @@ import (
 	"strings"
 	"net/url"
 	"net/http"
+	"crypto/tls"
 	. "github.com/aavzz/notifier/setup/syslog"
 	. "github.com/aavzz/notifier/setup/cfgfile"
 )
