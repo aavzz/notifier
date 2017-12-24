@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"net/http"
 	"crypto/tls"
-	"ioutil"
+	"io/ioutil"
 	. "github.com/aavzz/notifier/setup/syslog"
 	. "github.com/aavzz/notifier/setup/cfgfile"
 )
