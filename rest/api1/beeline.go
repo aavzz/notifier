@@ -5,7 +5,6 @@ import (
 	"strings"
 	"net/url"
 	"net/http"
-	"github.com/gorilla/http"
 	. "github.com/aavzz/notifier/setup/syslog"
 	. "github.com/aavzz/notifier/setup/cfgfile"
 )
