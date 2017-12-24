@@ -67,6 +67,8 @@ func Setup() {
 	ReadConfig()
 	InitLogging()
 
+	SysLog.Info("Server process started")
+	
 	//rest of initialization
 	SignalHandling()
 	InitHttp()
