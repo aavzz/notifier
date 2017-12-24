@@ -6,6 +6,7 @@ import (
 	"net/url"
 	"net/http"
 	"crypto/tls"
+	"ioutil"
 	. "github.com/aavzz/notifier/setup/syslog"
 	. "github.com/aavzz/notifier/setup/cfgfile"
 )
@@ -39,6 +40,8 @@ func sendMessageBeeline(numbers string, message string) {
 	if resp != nil {
 		defer resp.Body.Close()
 	}
+	body, err := ioutil.ReadAll(resp.Body)
+	bodyString := string(body)
 	SysLog.Info(fmt.Sprintf("Post result: %v", resp.Status))
-	SysLog.Info(fmt.Sprintf("Post result: %v", resp.Body))
+	SysLog.Info(fmt.Sprintf("Post result: %v", bodyString))
 }
