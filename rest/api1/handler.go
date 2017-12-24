@@ -16,13 +16,14 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	switch channel {
 		case "beeline":
 			re := regexp.MustCompile(`+7\d{10}`)
+			SysLog.Info("BBBBBBB")
 			phones := strings.Join(re.FindAllString(recipients, 5), ",")
 			l := len(message)
 			if l > 480 {
 				l = 480
 			}
 			msg := message[:l]
-			SysLog.Info("BBBBBBB")
+			SysLog.Info("CCCC")
 			SysLog.Info(phones)
 			if phones != "" && msg != "" {
 				sendMessageBeeline(phones, msg)
