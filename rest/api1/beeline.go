@@ -44,4 +44,5 @@ func sendMessageBeeline(numbers string, message string) {
 	bodyString := string(body)
 	SysLog.Info(fmt.Sprintf("Post result: %v", resp.Status))
 	SysLog.Info(fmt.Sprintf("Post result: %v", bodyString))
+	SysLog.Info(fmt.Sprintf("Post result: %v", strings.NewReader(parameters.Encode())))
 }
