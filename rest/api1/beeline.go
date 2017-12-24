@@ -2,8 +2,9 @@ package api1
 
 import (
 	"fmt"
-	"bytes"
+	"strings"
 	"net/url"
+	"net/http"
 	"github.com/gorilla/http"
 	. "github.com/aavzz/notifier/setup/syslog"
 	. "github.com/aavzz/notifier/setup/cfgfile"
@@ -11,25 +12,29 @@ import (
 
 func sendMessageBeeline(numbers string, message string) {
   
-	headers := make(map[string][]string)
-	headers["Content-Type"][0] = "application/x-www-form-urlencoded; charset=windows-1251"
-	
-	parameters := url.Values{}
-	parameters.Add("user", ConfigBeelineLogin())
-	parameters.Add("pass", ConfigBeelinePassword())
-	parameters.Add("sender", ConfigBeelineSender())
-	parameters.Add("action", "post_sms")
-	parameters.Add("target", numbers)
-	parameters.Add("message", message)
+	parameters := url.Values{
+		"user": {ConfigBeelineLogin()},
+		"pass": {ConfigBeelinePassword()},
+		"sender": {ConfigBeelineSender()},
+		"action": {"post_sms"},
+		"target": {numbers},
+		"message": {message}
+	}
   
-  	c := new(http.Client)
-
-	status, _, r, err := c.Post("https://beeline.amega-inform.ru/sendsms/", headers, bytes.NewBufferString(parameters.Encode()))
+	req, err := http.NewRequest("POST", "https://beeline.amega-inform.ru/sendsms/", strings.NewReader(parameters.Encode())) 
 	if err != nil {
 		SysLog.Err(err.Error())
 	}
-	if r != nil {
-		defer r.Close()
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=windows-1251")
+	
+  	c := new(http.Client)
+
+	resp, err := c.Do(req)
+	if err != nil {
+		SysLog.Err(err.Error())
 	}
-	SysLog.Info(fmt.Sprintf("Post result: %v", status))
+	if resp != nil {
+		defer resp.Body.Close()
+	}
+	SysLog.Info(fmt.Sprintf("Post result: %v", resp.Status))
 }
