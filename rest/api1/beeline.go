@@ -17,7 +17,7 @@ func sendMessageBeeline(numbers string, message string) {
 		"sender": {ConfigBeelineSender()},
 		"action": {"post_sms"},
 		"target": {numbers},
-		"message": {message}
+		"message": {message},
 	}
   
 	req, err := http.NewRequest("POST", "https://beeline.amega-inform.ru/sendsms/", strings.NewReader(parameters.Encode())) 
