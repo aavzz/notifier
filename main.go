@@ -11,9 +11,6 @@ import (
 )
 
 func main() {
-
 	Setup()
-	defer RemovePidFile()
-	SysLog.Info("Successfull start")
-
+	RemovePidFile()
 }
