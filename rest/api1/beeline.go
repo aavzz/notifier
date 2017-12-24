@@ -2,6 +2,7 @@ package api1
 
 import (
 	"fmt"
+	"bytes"
 	"net/url"
 	"github.com/gorilla/http"
 	. "github.com/aavzz/notifier/setup/syslog"
@@ -23,7 +24,7 @@ func sendMessageBeeline(numbers string, message string) {
   
   	c := new(http.Client)
 
-	status, _, r, err := c.Post("https://beeline.amega-inform.ru/sendsms/", headers, parameters.Encode())
+	status, _, r, err := c.Post("https://beeline.amega-inform.ru/sendsms/", headers, bytes.NewBufferString(parameters.Encode()))
 	if err != nil {
 		SysLog.Err(err.Error())
 	}
