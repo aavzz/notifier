@@ -17,7 +17,7 @@ import (
 func sendMessageBeeline(numbers string, message string) {
   
 	type result struct {
-		error []string `xml:"errors>error"`
+		e []string `xml:"output>errors>error"`
 	}
 	
 	c, err := CfgFileContent()
@@ -64,9 +64,9 @@ func sendMessageBeeline(numbers string, message string) {
 			}
 			err = xml.Unmarshal(body, &v)
 			
-			//if v.error != nil {
-				SysLog.Err(fmt.Sprintf("AAA %q", v.error))	
-			//}
+			if v.e != nil {
+				SysLog.Err(fmt.Sprintf("AAA %v", v.e))	
+			}
 			
 			bodyString := string(body)
 			SysLog.Info(fmt.Sprintf("Post result: %v", resp.Status))
