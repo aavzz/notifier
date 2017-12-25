@@ -24,9 +24,9 @@ func sendMessageBeeline(numbers string, message string) {
 			SysLog.Err(err.Error())	
 		} else {
 			parameters := url.Values{
-				"user": {*c.beeline.login},
-				"pass": {*c.beeline.password},
-				"sender": {*c.beeline.sender},
+				"user": {*c.Beeline.Login},
+				"pass": {*c.Beeline.Password},
+				"sender": {*c.Beeline.Sender},
 				"action": {"post_sms"},
 				"target": {numbers},
 				"message": {msg},
