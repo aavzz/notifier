@@ -39,9 +39,9 @@ func Setup() {
 		//and gets the coffin ready
 		ParseCmdLine()
 		WritePid()
-		ReadConfig()
 		InitLogging()
-
+		ReadConfig()
+		
 		<-sigterm
 		os.Exit(0)
 	}
@@ -64,9 +64,9 @@ func Setup() {
 	//real configuration happens here
 	ParseCmdLine()
 	WritePid()
-	ReadConfig()
 	InitLogging()
-
+	ReadConfig()
+	
 	SysLog.Info("Server process started")
 	
 	//rest of initialization
