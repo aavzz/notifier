@@ -21,8 +21,9 @@ func sendMessageBeeline(numbers string, message string) {
 	<output><errors><error>User authentication failed</error></errors></output>`
 	
 	
-	type Output struct {
-		error string `xml:"errors>error"`
+	
+	type Result struct {
+		E []string `xml:"errors>error"`
 	}
 	
 	c, err := CfgFileContent()
@@ -62,7 +63,7 @@ func sendMessageBeeline(numbers string, message string) {
 				defer resp.Body.Close()
 			}
 			
-			var v Output;
+			var v Result;
 			body, err := ioutil.ReadAll(resp.Body)
 			if err != nil {
 				SysLog.Err(err.Error())
@@ -73,7 +74,7 @@ func sendMessageBeeline(numbers string, message string) {
 			}
 			
 			//if v.e != nil {
-				SysLog.Err(fmt.Sprintf("AAA %q", v.error))	
+				SysLog.Err(fmt.Sprintf("AAA %q", v.E))	
 			//}
 			
 			bodyString := string(body)
