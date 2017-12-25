@@ -16,8 +16,15 @@ import (
 
 func sendMessageBeeline(numbers string, message string) {
   
+	
+	data := `<?xml version="1.0" encoding="UTF-8"?><output>
+<RECEIVER AGT_ID="" DATE_REPORT="" />
+<errors><error>User authentication failed</error></errors></output>`
+	
+	
 	type result struct {
-		e []string `xml:"output>errors>error"`
+		XMLName xml.Name `xml:"output"`
+		e []string `xml:"errors>error"`
 	}
 	
 	c, err := CfgFileContent()
@@ -62,7 +69,7 @@ func sendMessageBeeline(numbers string, message string) {
 			if err != nil {
 				SysLog.Err(err.Error())
 			}
-			err = xml.Unmarshal(body, &v)
+			err = xml.Unmarshal([]byte(data), &v)
 			
 			//if v.e != nil {
 				SysLog.Err(fmt.Sprintf("AAA %q", v.e))	
