@@ -19,7 +19,7 @@ type beelineSection struct {
 	sender   string
 }
 
-type BeelineSection struct {
+type BeelineSect struct {
 	Login    string
 	Password string
 	Sender   string
@@ -29,8 +29,8 @@ type configurationFile struct {
 	beeline beelineSection
 }
 
-type ConfigurationFile struct {
-	Beeline BeelineSection
+type CfgFile struct {
+	Beeline BeelineSect
 }
 
 
@@ -82,10 +82,10 @@ func ReadConfig() {
 	cfgFile2ok=true
 }
 
-func CfgFileContent() (*ConfigurationFile, error) {
+func CfgFileContent() (*CfgFile, error) {
 	if cfgFile1ok == true {
-		c := &ConfigurationFile{
-			Beeline: BeelineSection{
+		c := &CfgFile{
+			Beeline: BeelineSect{
 				Login: cfgFile1.beeline.login,
 				Password: cfgFile1.beeline.password,
 				Sender: cfgFile1.beeline.sender,
@@ -94,8 +94,8 @@ func CfgFileContent() (*ConfigurationFile, error) {
 		return c, nil
 	}
 	if cfgFile2ok == true {
-		c := &ConfigurationFile{
-			Beeline: BeelineSection{
+		c := &CfgFile{
+			Beeline: BeelineSect{
 				Login: cfgFile2.beeline.login,
 				Password: cfgFile2.beeline.password,
 				Sender: cfgFile2.beeline.sender,
