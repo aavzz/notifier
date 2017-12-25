@@ -8,6 +8,7 @@ package cfgfile
 import (
 	"os"
 	"fmt"
+	"errors"
 	"github.com/go-ini/ini"
 	. "github.com/aavzz/notifier/setup/cmdlnopts"
 )
@@ -22,7 +23,8 @@ type configurationFile struct {
 	beeline beelineSection
 }
 
-var cfgFile configurationFile
+var cfgFile1, cfgFile2 configurationFile
+var cfgFile1ok, cfgFile2ok bool
 
 // Package exported objects
 
@@ -35,30 +37,58 @@ func ReadConfig() {
 		os.Exit(1)
 	}
 
+	cfgFile1ok=false
 	_, err = cfg.GetSection("beeline")
-
 	if err == nil {
 		if cfg.Section("beeline").HasKey("login") {
-			cfgFile.beeline.login = cfg.Section("beeline").Key("login").String()
+			cfgFile1.beeline.login = cfg.Section("beeline").Key("login").String()
 		}
 		if cfg.Section("beeline").HasKey("password") {
-			cfgFile.beeline.password = cfg.Section("beeline").Key("password").String()
+			cfgFile1.beeline.password = cfg.Section("beeline").Key("password").String()
 		}
 		if cfg.Section("beeline").HasKey("sender") {
-			cfgFile.beeline.sender = cfg.Section("beeline").Key("sender").String()
+			cfgFile1.beeline.sender = cfg.Section("beeline").Key("sender").String()
 		}
 	}
-
+	// true only means that we finished updating config data, not that the data is ok
+	cfgFile1ok=true
+	
+	// update second copy of config data
+	cfgFile2ok=false
+	if err == nil {
+		if cfg.Section("beeline").HasKey("login") {
+			cfgFile1.beeline.login = cfg.Section("beeline").Key("login").String()
+		}
+		if cfg.Section("beeline").HasKey("password") {
+			cfgFile1.beeline.password = cfg.Section("beeline").Key("password").String()
+		}
+		if cfg.Section("beeline").HasKey("sender") {
+			cfgFile1.beeline.sender = cfg.Section("beeline").Key("sender").String()
+		}
+	}
+	cfgFile2ok=true
 }
 
-func ConfigBeelineLogin() string {
-	return cfgFile.beeline.login
-}
-
-func ConfigBeelinePassword() string {
-	return cfgFile.beeline.password
-}
-
-func ConfigBeelineSender() string {
-	return cfgFile.beeline.sender
+func CfgFileContent() (*configurationFile, error) {
+	if cfgFile1ok == true {
+		var c := &configurationFile{
+			beeline: beelineSection{
+				login: cfgFile1.beeline.login
+				password: cfgFile1.beeline.password
+				sender: cfgFile1.beeline.sender
+			}
+		}
+		return c, nil
+	}
+	if cfgFile2ok == true {
+		var c := &configurationFile{
+			beeline: beelineSection{
+				login: cfgFile2.beeline.login
+				password: cfgFile2.beeline.password
+				sender: cfgFile2.beeline.sender
+			}
+		}
+		return c, nil
+	}
+	return nil, errors.New("Error retrieving configuration file content")
 }
