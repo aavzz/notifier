@@ -62,7 +62,7 @@ func sendMessageBeeline(numbers string, message string) {
 			if err != nil {
 				SysLog.Err(err.Error())
 			}
-			err := xml.Unmarshal(body, &v)
+			err = xml.Unmarshal(body, &v)
 			
 			if v.error != nil {
 				SysLog(fmt.Sprintf("AAA %q", v.error))	
@@ -71,7 +71,7 @@ func sendMessageBeeline(numbers string, message string) {
 			bodyString := string(body)
 			SysLog.Info(fmt.Sprintf("Post result: %v", resp.Status))
 			SysLog.Info(fmt.Sprintf("Post result: %v", bodyString))
-			SysLog.Info(fmt.Sprintf("Post result: %v", strings.NewReader(parameters.Encode()))
+			SysLog.Info(fmt.Sprintf("Post result: %v", strings.NewReader(parameters.Encode())))
 		}
 	}
 }
