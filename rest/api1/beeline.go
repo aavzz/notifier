@@ -64,9 +64,9 @@ func sendMessageBeeline(numbers string, message string) {
 			}
 			err = xml.Unmarshal(body, &v)
 			
-			if v.error != nil {
+			//if v.error != nil {
 				SysLog.Err(fmt.Sprintf("AAA %q", v.error))	
-			}
+			//}
 			
 			bodyString := string(body)
 			SysLog.Info(fmt.Sprintf("Post result: %v", resp.Status))
