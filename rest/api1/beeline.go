@@ -20,8 +20,7 @@ func sendMessageBeeline(numbers string, message string) {
 	data := `<output><errors><error>User authentication failed</error></errors></output>`
 	
 	
-	type result struct {
-		XMLName xml.Name `xml:"output"`
+	type Output struct {
 		errors []string `xml:"errors>error"`
 	}
 	
@@ -62,7 +61,7 @@ func sendMessageBeeline(numbers string, message string) {
 				defer resp.Body.Close()
 			}
 			
-			v := result{};
+			var v Output;
 			body, err := ioutil.ReadAll(resp.Body)
 			if err != nil {
 				SysLog.Err(err.Error())
