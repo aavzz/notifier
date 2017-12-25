@@ -73,20 +73,20 @@ func CfgFileContent() (*configurationFile, error) {
 	if cfgFile1ok == true {
 		c := &configurationFile{
 			beeline: beelineSection{
-				login: cfgFile1.beeline.login
-				password: cfgFile1.beeline.password
-				sender: cfgFile1.beeline.sender
-			}
+				login: cfgFile1.beeline.login,
+				password: cfgFile1.beeline.password,
+				sender: cfgFile1.beeline.sender,
+			},
 		}
 		return c, nil
 	}
 	if cfgFile2ok == true {
 		c := &configurationFile{
 			beeline: beelineSection{
-				login: cfgFile2.beeline.login
-				password: cfgFile2.beeline.password
-				sender: cfgFile2.beeline.sender
-			}
+				login: cfgFile2.beeline.login,
+				password: cfgFile2.beeline.password,
+				sender: cfgFile2.beeline.sender,
+			},
 		}
 		return c, nil
 	}
