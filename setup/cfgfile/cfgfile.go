@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"errors"
 	"github.com/go-ini/ini"
+	. "github.com/aavzz/notifier/setup/syslog"
 	. "github.com/aavzz/notifier/setup/cmdlnopts"
 )
 
@@ -46,7 +47,12 @@ func ReadConfig() {
 	cfg, err := ini.Load(ConfigCfgFile())
 
 	if err != nil {
-		fmt.Printf("Cannot read configuration file %s: %s\n", ConfigCfgFile(), err)
+		daemonState := os.Getenv("_GO_DAEMON_STATE")
+		if daemonState == "1" {
+			fmt.Printf("Cannot read configuration file %s: %s\n", ConfigCfgFile(), err)
+		} else {
+			SysLog.Err(fmt.Sprintf("Cannot read configuration file %s: %s\n", ConfigCfgFile(), err))
+		}
 		os.Exit(1)
 	}
 
