@@ -71,7 +71,7 @@ func ReadConfig() {
 
 func CfgFileContent() (*configurationFile, error) {
 	if cfgFile1ok == true {
-		var c := &configurationFile{
+		c := &configurationFile{
 			beeline: beelineSection{
 				login: cfgFile1.beeline.login
 				password: cfgFile1.beeline.password
@@ -81,7 +81,7 @@ func CfgFileContent() (*configurationFile, error) {
 		return c, nil
 	}
 	if cfgFile2ok == true {
-		var c := &configurationFile{
+		c := &configurationFile{
 			beeline: beelineSection{
 				login: cfgFile2.beeline.login
 				password: cfgFile2.beeline.password
