@@ -5,8 +5,9 @@ import (
 	"strings"
 	"net/url"
 	"net/http"
-	"crypto/tls"
 	"io/ioutil"
+	"crypto/tls"
+	"encoding/xml"
 	"golang.org/x/text/encoding/charmap"
 	. "github.com/aavzz/notifier/setup/syslog"
 	. "github.com/aavzz/notifier/setup/cfgfile"
@@ -15,6 +16,10 @@ import (
 
 func sendMessageBeeline(numbers string, message string) {
   
+	type result struct {
+		error []string `xml:"errors>error"`
+	}
+	
 	c, err := CfgFileContent()
 	if err != nil {
 		SysLog.Err(err.Error())	
@@ -51,12 +56,22 @@ func sendMessageBeeline(numbers string, message string) {
 			if resp != nil {
 				defer resp.Body.Close()
 			}
+			
+			v := result{};
 			body, err := ioutil.ReadAll(resp.Body)
+			if err != nil {
+				SysLog.Err(err.Error())
+			}
+			err := xml.Unmarshal(body, &v)
+			
+			if v.error != nil {
+				SysLog(fmt.Sprintf("AAA %q", v.error))	
+			}
+			
 			bodyString := string(body)
 			SysLog.Info(fmt.Sprintf("Post result: %v", resp.Status))
 			SysLog.Info(fmt.Sprintf("Post result: %v", bodyString))
-			SysLog.Info(fmt.Sprintf("Post result: %v", strings.NewReader(parameters.Encode())))
-
+			SysLog.Info(fmt.Sprintf("Post result: %v", strings.NewReader(parameters.Encode()))
 		}
 	}
 }
