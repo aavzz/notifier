@@ -19,14 +19,27 @@ type beelineSection struct {
 	sender   string
 }
 
+type BeelineSection struct {
+	Login    string
+	Password string
+	Sender   string
+}
+
 type configurationFile struct {
 	beeline beelineSection
 }
+
+type ConfigurationFile struct {
+	Beeline BeelineSection
+}
+
 
 var cfgFile1, cfgFile2 configurationFile
 var cfgFile1ok, cfgFile2ok bool
 
 // Package exported objects
+
+
 
 func ReadConfig() {
 
@@ -69,23 +82,23 @@ func ReadConfig() {
 	cfgFile2ok=true
 }
 
-func CfgFileContent() (*configurationFile, error) {
+func CfgFileContent() (*ConfigurationFile, error) {
 	if cfgFile1ok == true {
-		c := &configurationFile{
-			beeline: beelineSection{
-				login: cfgFile1.beeline.login,
-				password: cfgFile1.beeline.password,
-				sender: cfgFile1.beeline.sender,
+		c := &ConfigurationFile{
+			Beeline: BeelineSection{
+				Login: cfgFile1.beeline.login,
+				Password: cfgFile1.beeline.password,
+				Sender: cfgFile1.beeline.sender,
 			},
 		}
 		return c, nil
 	}
 	if cfgFile2ok == true {
-		c := &configurationFile{
-			beeline: beelineSection{
-				login: cfgFile2.beeline.login,
-				password: cfgFile2.beeline.password,
-				sender: cfgFile2.beeline.sender,
+		c := &ConfigurationFile{
+			Beeline: BeelineSection{
+				Login: cfgFile2.beeline.login,
+				Password: cfgFile2.beeline.password,
+				Sender: cfgFile2.beeline.sender,
 			},
 		}
 		return c, nil
