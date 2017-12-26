@@ -12,14 +12,14 @@ import (
 
 func Daemonize() (*os.Process, error) {
 
-	daemonState := os.Getenv("_GO_DAEMON_STATE")
+	daemonState := os.Getenv("_NOTIFY_DAEMON_STATE")
 	switch daemonState {
 	case "":
 		syscall.Umask(0022)
 		syscall.Setsid()
-		os.Setenv("_GO_DAEMON_STATE", "1")
+		os.Setenv("_NOTIFI_DAEMON_STATE", "1")
 	case "1":
-		os.Setenv("_GO_DAEMON_STATE", "")
+		os.Setenv("_NOTIFY_DAEMON_STATE", "")
 		return nil, nil
 	}
 
