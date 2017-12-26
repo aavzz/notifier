@@ -25,7 +25,7 @@ func Setup() {
 	//create child process
 	p, err := Daemonize()
 	if err != nil {
-		fmt.Printf("Cannot daemonize: %s/n", err)
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 
