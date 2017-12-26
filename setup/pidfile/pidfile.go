@@ -7,7 +7,6 @@ package pidfile
 
 import (
 	"os"
-	"fmt"
 	"github.com/tabalt/pidfile"
 	. "github.com/aavzz/notifier/setup/syslog"
 	. "github.com/aavzz/notifier/setup/cmdlnopts"
@@ -19,7 +18,7 @@ func WritePid() {
 	p = pidfile.NewPidFile(ConfigPidFile())
 	oldpid, err := p.ReadPidFromFile(p.File)
 	if err == nil && oldpid.ProcessExist() {
-		fmt.Println("Another process is already running")
+		SysLog.Err("Another process is already running")
 		os.Exit(1)
 	}
 
