@@ -38,8 +38,8 @@ func Setup() {
 		//writes errors to stdout
 		//and gets the coffin ready
 		ParseCmdLine()
-		WritePid()
 		InitLogging()
+		WritePid()
 		ReadConfig()
 		
 		<-sigterm
@@ -63,8 +63,8 @@ func Setup() {
 	//we processed this in parent just to check for correctness
 	//real configuration happens here
 	ParseCmdLine()
-	WritePid()
 	InitLogging()
+	WritePid()
 	ReadConfig()
 	
 	SysLog.Info("Server process started")
