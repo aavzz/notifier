@@ -7,7 +7,6 @@ package cfgfile
 
 import (
 	"os"
-	"fmt"
 	"errors"
 	"github.com/go-ini/ini"
 	. "github.com/aavzz/notifier/setup/syslog"
@@ -49,9 +48,7 @@ func ReadConfig() {
 
 	if err != nil {
 		daemonState := os.Getenv("_NOTIFY_DAEMON_STATE")
-		if daemonState == "1" {
-			fmt.Println(err.Error())
-		} else {
+		if daemonState == "" {
 			SysLog.Err(err.Error())
 			RemovePidFile()
 		}
