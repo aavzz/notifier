@@ -29,9 +29,20 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 				SysLog.Info(fmt.Sprintf("Failed to send message via beeline"))
 			}
 		case "email":
+			re := regexp.MustCompile(`\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3}`)
+			emails := re.FindAllString(recipients, 5)
+			l := len(message)
+			if l > 480 {
+				l = 480
+			}
+			msg := message[:l]
+			if emails != nil && msg != "" {
+				SysLog.Info(fmt.Sprintf("Message '%s' sent via email to %q", msg, emails))
+				sendMessageEmail(emails, msg)
+			} else {
+				SysLog.Info(fmt.Sprintf("Failed to send message via email"))
+			}
 		
-		case "telegram":
-
 		default:
 			SysLog.Info("No valid channel found")	
 	}
