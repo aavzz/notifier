@@ -113,12 +113,12 @@ func ReadConfig() {
 func CfgFileContent() (*CfgFile, error) {
 	if cfgFile1ok == true {
 		c := &CfgFile{
-			Beeline: BeelineSect{
+			Beeline: BeelineSection{
 				Login: cfgFile1.beeline.login,
 				Password: cfgFile1.beeline.password,
 				Sender: cfgFile1.beeline.sender,
 			},
-			Email: EmailSect{
+			Email: EmailSection{
 				Sender: cfgFile1.email.sender,
 			},
 		}
@@ -126,12 +126,12 @@ func CfgFileContent() (*CfgFile, error) {
 	}
 	if cfgFile2ok == true {
 		c := &CfgFile{
-			Beeline: BeelineSect{
+			Beeline: BeelineSection{
 				Login: cfgFile2.beeline.login,
 				Password: cfgFile2.beeline.password,
 				Sender: cfgFile2.beeline.sender,
 			},
-			Email: EmailSect{
+			Email: EmailSection{
 				Sender: cfgFile2.email.sender,
 			},
 		}
