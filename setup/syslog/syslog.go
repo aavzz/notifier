@@ -6,9 +6,9 @@ package syslog
  */
 
 import (
+	"os"
 	"fmt"
 	"log/syslog"
-	"os"
 )
 
 var SysLog *syslog.Writer
