@@ -17,7 +17,7 @@ func Daemonize() (*os.Process, error) {
 	case "":
 		syscall.Umask(0022)
 		syscall.Setsid()
-		os.Setenv("_NOTIFI_DAEMON_STATE", "1")
+		os.Setenv("_NOTIFY_DAEMON_STATE", "1")
 	case "1":
 		os.Setenv("_NOTIFY_DAEMON_STATE", "")
 		return nil, nil
