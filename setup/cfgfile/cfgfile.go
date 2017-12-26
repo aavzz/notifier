@@ -75,13 +75,13 @@ func ReadConfig() {
 	cfgFile2ok=false
 	if err == nil {
 		if cfg.Section("beeline").HasKey("login") {
-			cfgFile1.beeline.login = cfg.Section("beeline").Key("login").String()
+			cfgFile2.beeline.login = cfg.Section("beeline").Key("login").String()
 		}
 		if cfg.Section("beeline").HasKey("password") {
-			cfgFile1.beeline.password = cfg.Section("beeline").Key("password").String()
+			cfgFile2.beeline.password = cfg.Section("beeline").Key("password").String()
 		}
 		if cfg.Section("beeline").HasKey("sender") {
-			cfgFile1.beeline.sender = cfg.Section("beeline").Key("sender").String()
+			cfgFile2.beeline.sender = cfg.Section("beeline").Key("sender").String()
 		}
 	}
 	cfgFile2ok=true
