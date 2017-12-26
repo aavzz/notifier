@@ -41,7 +41,7 @@ type configurationFile struct {
 
 type CfgFile struct {
 	Beeline BeelineSection
-	Email Emailsection
+	Email EmailSection
 }
 
 
