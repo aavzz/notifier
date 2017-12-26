@@ -27,11 +27,13 @@ type BeelineSection struct {
 }
 
 type emailSection struct {
-	sender   string
+	from   string
+	subject string
 }
 
 type EmailSection struct {
-	Sender   string
+	From   string
+	Subject string
 }
 
 type configurationFile struct {
@@ -80,8 +82,11 @@ func ReadConfig() {
 	}
 	_, err = cfg.GetSection("email")
 	if err == nil {
-		if cfg.Section("email").HasKey("sender") {
-			cfgFile1.email.sender = cfg.Section("email").Key("sender").String()
+		if cfg.Section("email").HasKey("from") {
+			cfgFile1.email.from = cfg.Section("email").Key("from").String()
+		}
+		if cfg.Section("email").HasKey("subject") {
+			cfgFile1.email.subject = cfg.Section("email").Key("subject").String()
 		}
 	}
 	// true only means that we finished updating config data, not that the data is ok
@@ -103,8 +108,11 @@ func ReadConfig() {
 	}
 	_, err = cfg.GetSection("email")
 	if err == nil {
-		if cfg.Section("email").HasKey("sender") {
-			cfgFile2.email.sender = cfg.Section("email").Key("sender").String()
+		if cfg.Section("email").HasKey("from") {
+			cfgFile2.email.from = cfg.Section("email").Key("from").String()
+		}
+		if cfg.Section("email").HasKey("subject") {
+			cfgFile2.email.subject = cfg.Section("email").Key("subject").String()
 		}
 	}
 	cfgFile2ok=true
@@ -119,7 +127,8 @@ func CfgFileContent() (*CfgFile, error) {
 				Sender: cfgFile1.beeline.sender,
 			},
 			Email: EmailSection{
-				Sender: cfgFile1.email.sender,
+				From: cfgFile1.email.from,
+				Subject: cfgFile1.email.subject,
 			},
 		}
 		return c, nil
@@ -132,7 +141,8 @@ func CfgFileContent() (*CfgFile, error) {
 				Sender: cfgFile2.beeline.sender,
 			},
 			Email: EmailSection{
-				Sender: cfgFile2.email.sender,
+				From: cfgFile2.email.from,
+				Subject: cfgFile2.email.subject,
 			},
 		}
 		return c, nil
