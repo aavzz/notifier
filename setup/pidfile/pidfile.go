@@ -18,7 +18,10 @@ func WritePid() {
 	p = pidfile.NewPidFile(ConfigPidFile())
 	oldpid, err := p.ReadPidFromFile(p.File)
 	if err == nil && oldpid.ProcessExist() {
-		SysLog.Err("Another process is already running")
+		daemonState := os.Getenv("_NOTIFY_DAEMON_STATE")
+		if daemonState == "" {
+			SysLog.Err("Another process is already running")
+		}
 		os.Exit(1)
 	}
 
