@@ -1,7 +1,6 @@
 package api1
 
 import (
-	"net/smtp"
 	"gopkg.in/gomail.v2"
 	. "github.com/aavzz/notifier/setup/syslog"
 	. "github.com/aavzz/notifier/setup/cfgfile"
