@@ -20,7 +20,7 @@ func sendMessageBeeline(numbers string, message string) {
 		Errors []string `xml:"errors>error"`
 	}
 	
-	c, err := CfgFileContent()
+	cfg, err := CfgFileContent()
 	if err != nil {
 		SysLog.Err(err.Error())	
 	} else {
@@ -29,9 +29,9 @@ func sendMessageBeeline(numbers string, message string) {
 			SysLog.Err(err.Error())	
 		} else {
 			parameters := url.Values{
-				"user": {c.Beeline.Login},
-				"pass": {c.Beeline.Password},
-				"sender": {c.Beeline.Sender},
+				"user": {cfg.Beeline.Login},
+				"pass": {cfg.Beeline.Password},
+				"sender": {cfg.Beeline.Sender},
 				"action": {"post_sms"},
 				"target": {numbers},
 				"message": {msg},
