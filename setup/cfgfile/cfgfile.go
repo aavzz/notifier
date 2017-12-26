@@ -48,11 +48,11 @@ func ReadConfig() {
 	cfg, err := ini.Load(ConfigCfgFile())
 
 	if err != nil {
-		daemonState := os.Getenv("_GO_DAEMON_STATE")
+		daemonState := os.Getenv("_NOTIFY_DAEMON_STATE")
 		if daemonState == "1" {
-			fmt.Printf("Cannot read configuration file %s: %s\n", ConfigCfgFile(), err)
+			fmt.Println(err.Error())
 		} else {
-			SysLog.Err(fmt.Sprintf("Cannot read configuration file %s: %s\n", ConfigCfgFile(), err))
+			SysLog.Err(err.Error())
 			RemovePidFile()
 		}
 		os.Exit(1)
