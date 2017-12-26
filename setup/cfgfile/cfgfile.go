@@ -20,18 +20,28 @@ type beelineSection struct {
 	sender   string
 }
 
-type BeelineSect struct {
+type BeelineSection struct {
 	Login    string
 	Password string
 	Sender   string
 }
 
+type emailSection struct {
+	sender   string
+}
+
+type EmailSection struct {
+	Sender   string
+}
+
 type configurationFile struct {
 	beeline beelineSection
+	email emailSection
 }
 
 type CfgFile struct {
-	Beeline BeelineSect
+	Beeline BeelineSection
+	Email Emailsection
 }
 
 
@@ -68,11 +78,18 @@ func ReadConfig() {
 			cfgFile1.beeline.sender = cfg.Section("beeline").Key("sender").String()
 		}
 	}
+	_, err = cfg.GetSection("email")
+	if err == nil {
+		if cfg.Section("email").HasKey("sender") {
+			cfgFile1.email.sender = cfg.Section("email").Key("sender").String()
+		}
+	}
 	// true only means that we finished updating config data, not that the data is ok
 	cfgFile1ok=true
 	
 	// update second copy of config data
 	cfgFile2ok=false
+	_, err = cfg.GetSection("beeline")
 	if err == nil {
 		if cfg.Section("beeline").HasKey("login") {
 			cfgFile2.beeline.login = cfg.Section("beeline").Key("login").String()
@@ -82,6 +99,12 @@ func ReadConfig() {
 		}
 		if cfg.Section("beeline").HasKey("sender") {
 			cfgFile2.beeline.sender = cfg.Section("beeline").Key("sender").String()
+		}
+	}
+	_, err = cfg.GetSection("email")
+	if err == nil {
+		if cfg.Section("email").HasKey("sender") {
+			cfgFile2.email.sender = cfg.Section("email").Key("sender").String()
 		}
 	}
 	cfgFile2ok=true
@@ -95,6 +118,9 @@ func CfgFileContent() (*CfgFile, error) {
 				Password: cfgFile1.beeline.password,
 				Sender: cfgFile1.beeline.sender,
 			},
+			Email: EmailSect{
+				Sender: cfgFile1.email.sender,
+			},
 		}
 		return c, nil
 	}
@@ -104,6 +130,9 @@ func CfgFileContent() (*CfgFile, error) {
 				Login: cfgFile2.beeline.login,
 				Password: cfgFile2.beeline.password,
 				Sender: cfgFile2.beeline.sender,
+			},
+			Email: EmailSect{
+				Sender: cfgFile2.email.sender,
 			},
 		}
 		return c, nil
