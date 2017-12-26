@@ -11,6 +11,7 @@ import (
 	"errors"
 	"github.com/go-ini/ini"
 	. "github.com/aavzz/notifier/setup/syslog"
+	. "github.com/aavzz/notifier/setup/pidfile"
 	. "github.com/aavzz/notifier/setup/cmdlnopts"
 )
 
@@ -52,6 +53,7 @@ func ReadConfig() {
 			fmt.Printf("Cannot read configuration file %s: %s\n", ConfigCfgFile(), err)
 		} else {
 			SysLog.Err(fmt.Sprintf("Cannot read configuration file %s: %s\n", ConfigCfgFile(), err))
+			RemovePidFile()
 		}
 		os.Exit(1)
 	}
