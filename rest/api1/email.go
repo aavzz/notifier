@@ -12,12 +12,11 @@ func sendMessageEmail(emails []string, message string) {
 	if err != nil {
 		SysLog.Err(err.Error())	
 	} else {
-		//msg, err := charmap.Windows1251.NewEncoder().String(message)
 		m := gomail.NewMessage()
 		m.SetHeaders(map[string][]string{
-			"From":    {m.FormatAddress("noreply@telinxet.ru", "Notifier")},
+			"From":    {m.FormatAddress(cfg.Email.From, "Notifier")},
 			"To":      emails,
-			"Subject": {"** Notification [" + cfg.Email.Sender + "] **"},
+			"Subject": {cfg.Email.Subject},
 		})
 		m.SetBody("text/plain", message)
   
