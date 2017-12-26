@@ -9,17 +9,22 @@ import (
 
 func sendMessageEmail(emails []string, message string) {
  
-	m := gomail.NewMessage()
-	m.SetHeaders(map[string][]string{
-		"From":    {m.FormatAddress("alex@example.com", "Alex")},
-		"To":      emails,
-		"Subject": {"Hello"},
-	})
-	m.SetBody("text/plain", "Hello!")
+	cfg, err := CfgFileContent()
+	if err != nil {
+		SysLog.Err(err.Error())	
+	} else {
+		//msg, err := charmap.Windows1251.NewEncoder().String(message)
+		m := gomail.NewMessage()
+		m.SetHeaders(map[string][]string{
+			"From":    {m.FormatAddress("noreply@telinxet.ru", "Notifier")},
+			"To":      emails,
+			"Subject": {"** Notification [" + cfg.Email.Sender + "] **"},
+		})
+		m.SetBody("text/plain", message)
   
-	d := gomail.Dialer{Host: "localhost", Port: 25}
-	if err := d.DialAndSend(m); err != nil {
-		SysLog.Err(err.Error())
+		d := gomail.Dialer{Host: "localhost", Port: 25}
+		if err := d.DialAndSend(m); err != nil {
+			SysLog.Err(err.Error())
+		}
 	}
-  
 }
