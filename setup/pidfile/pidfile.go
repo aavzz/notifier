@@ -24,10 +24,10 @@ func WritePid() {
 	}
 
 	//avoid creating pidfile in parent
-	daemonState := os.Getenv("_GO_DAEMON_STATE")
+	daemonState := os.Getenv("_NOTIFY_DAEMON_STATE")
 	if daemonState == "" {
 		if err := p.WritePidToFile(p.File, p.Pid); err != nil {
-			SysLog.Err("Cannot create pidfile")
+			SysLog.Err(err.Error())
 			os.Exit(1)
 		}
 	}
