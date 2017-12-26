@@ -2,8 +2,8 @@ package signal
 
 import (
 	"os"
-	"os/signal"
 	"syscall"
+	"os/signal"
         . "github.com/aavzz/notifier/setup/syslog"
 	. "github.com/aavzz/notifier/setup/pidfile"
 	. "github.com/aavzz/notifier/setup/cfgfile"
