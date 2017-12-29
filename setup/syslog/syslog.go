@@ -15,7 +15,7 @@ var SysLog *syslog.Writer
 
 func InitLogging() {
 	var err error
-	SysLog, err = syslog.New(syslog.LOG_INFO|syslog.LOG_DAEMON, "notifier")
+	SysLog, err = syslog.New(syslog.LOG_INFO|syslog.LOG_DAEMON, "notifyd")
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
