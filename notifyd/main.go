@@ -1,8 +1,8 @@
-package main
-
 /*
- * stdout is unavailable after Setup()
- */
+notifyd sends messages via vifferent providers
+(sms, email, etc.)
+*/
+package main
 
 import (
 	. "github.com/aavzz/notifier/setup"

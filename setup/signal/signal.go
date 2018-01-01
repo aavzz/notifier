@@ -1,14 +1,22 @@
+/*
+Package signal sets up signal handling for the project.
+*/
 package signal
 
 import (
-	"os"
-	"syscall"
-	"os/signal"
-        . "github.com/aavzz/notifier/setup/syslog"
-	. "github.com/aavzz/notifier/setup/pidfile"
 	. "github.com/aavzz/notifier/setup/cfgfile"
+	. "github.com/aavzz/notifier/setup/pidfile"
+	. "github.com/aavzz/notifier/setup/syslog"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
+// SignalHandling sets up signal handling.
+// SIGHUP causes the process to re-read its
+// configuration file.
+// SIGINT, SIGQUIT, SIGTERM cause the process
+// to remove the PID file and exit.
 func SignalHandling() {
 
 	sighup := make(chan os.Signal, 1)

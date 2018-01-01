@@ -1,25 +1,26 @@
+/*
+Package setup initializes the process to run in the
+background.
+*/
 package setup
 
-/*
- * this code runs both in parent and child
- * so beware of stdout availability (parent only)
- */
-
 import (
-	"os"
 	"fmt"
-	"time"
-	"syscall"
-	"os/signal"
-	. "github.com/aavzz/notifier/setup/http"
-	. "github.com/aavzz/notifier/setup/daemon"
-	. "github.com/aavzz/notifier/setup/signal"
-	. "github.com/aavzz/notifier/setup/syslog"
-	. "github.com/aavzz/notifier/setup/pidfile"
+	. "github.com/aavzz/notifier/rest"
 	. "github.com/aavzz/notifier/setup/cfgfile"
 	. "github.com/aavzz/notifier/setup/cmdlnopts"
+	. "github.com/aavzz/notifier/setup/daemon"
+	. "github.com/aavzz/notifier/setup/pidfile"
+	. "github.com/aavzz/notifier/setup/signal"
+	. "github.com/aavzz/notifier/setup/syslog"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 )
 
+// Setup spawns child process, checks that everything is ok,
+// does the necessary initialization and stops the parent process.
 func Setup() {
 
 	//create child process
@@ -39,9 +40,7 @@ func Setup() {
 		//and gets the coffin ready
 		ParseCmdLine()
 		InitLogging()
-		WritePid()
-		ReadConfig()
-		
+
 		<-sigterm
 		os.Exit(0)
 	}
@@ -64,12 +63,13 @@ func Setup() {
 	//real configuration happens here
 	ParseCmdLine()
 	InitLogging()
+
+	//rest of initialization
 	WritePid()
 	ReadConfig()
-	
-	SysLog.Info("Server process started")
-	
-	//rest of initialization
 	SignalHandling()
+
+	SysLog.Info("Server process started")
+
 	InitHttp()
 }

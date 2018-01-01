@@ -1,63 +1,62 @@
 package api1
 
 import (
-	"fmt"
-	"strings"
-	"net/url"
-	"net/http"
-	"io/ioutil"
 	"crypto/tls"
 	"encoding/xml"
-	"golang.org/x/text/encoding/charmap"
-	. "github.com/aavzz/notifier/setup/syslog"
+	"fmt"
 	. "github.com/aavzz/notifier/setup/cfgfile"
-	
+	. "github.com/aavzz/notifier/setup/syslog"
+	"golang.org/x/text/encoding/charmap"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
 )
 
 func sendMessageBeeline(numbers string, message string) {
-  
+
 	type Output struct {
 		Errors []string `xml:"errors>error"`
 	}
-	
+
 	cfg, err := CfgFileContent()
 	if err != nil {
-		SysLog.Err(err.Error())	
+		SysLog.Err(err.Error())
 	} else {
 		msg, err := charmap.Windows1251.NewEncoder().String(message)
 		if err != nil {
-			SysLog.Err(err.Error())	
+			SysLog.Err(err.Error())
 		} else {
 			parameters := url.Values{
-				"user": {cfg.Beeline.Login},
-				"pass": {cfg.Beeline.Password},
-				"sender": {cfg.Beeline.Sender},
-				"action": {"post_sms"},
-				"target": {numbers},
+				"user":    {cfg.Beeline.Login},
+				"pass":    {cfg.Beeline.Password},
+				"sender":  {cfg.Beeline.Sender},
+				"action":  {"post_sms"},
+				"target":  {numbers},
 				"message": {msg},
 			}
 
 			url := "https://beeline.amega-inform.ru/sendsms/"
-			req, err := http.NewRequest("POST", url, strings.NewReader(parameters.Encode())) 
+			req, err := http.NewRequest("POST", url, strings.NewReader(parameters.Encode()))
 			if err != nil {
 				SysLog.Err(err.Error())
 			}
 			req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=windows-1251")
-	
+
 			tr := &http.Transport{
-		        	TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+				TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 			}
 			c := &http.Client{Transport: tr}
 
-		  	resp, err := c.Do(req)
+			resp, err := c.Do(req)
 			if err != nil {
 				SysLog.Err(err.Error())
 			}
 			if resp != nil {
 				defer resp.Body.Close()
 			}
-			
-			var v Output;
+
+			var v Output
 			body, err := ioutil.ReadAll(resp.Body)
 			if err != nil {
 				SysLog.Err(err.Error())
@@ -66,9 +65,9 @@ func sendMessageBeeline(numbers string, message string) {
 			if err != nil {
 				SysLog.Err(err.Error())
 			}
-			
+
 			if v.Errors != nil {
-				SysLog.Err(fmt.Sprintf("Provider output: %q", v.Errors))	
+				SysLog.Err(fmt.Sprintf("Provider output: %q", v.Errors))
 			}
 		}
 	}

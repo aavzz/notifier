@@ -1,15 +1,17 @@
-package daemon
-
 /*
- * this code runs both in parent and child
- * so beware of stdout availability (parent only)
- */
+Package daemon sets up the process to run in the background.
+Since fork() is unavailable in Go, child process is started
+as a regular process. A special environment variable is used
+to syncronize parent's and child's behaviour.
+*/
+package daemon
 
 import (
 	"os"
 	"syscall"
 )
 
+// Daemonize starts child process.
 func Daemonize() (*os.Process, error) {
 
 	daemonState := os.Getenv("_NOTIFY_DAEMON_STATE")
@@ -42,4 +44,3 @@ func Daemonize() (*os.Process, error) {
 
 	return p, nil
 }
-
