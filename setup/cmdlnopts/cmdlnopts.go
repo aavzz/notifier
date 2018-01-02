@@ -32,7 +32,7 @@ func ParseCmdLine() {
 	cmdLnOpts.pidfile = *p
 }
 
-//ConfigPidFile returns the name of PID file
+//ConfigPidFile returns address and port to bind to
 func ConfigAddress() string {
 	return cmdLnOpts.address
 }
