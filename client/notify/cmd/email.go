@@ -35,7 +35,7 @@ func emailCommand(cmd *cobra.Command, args []string) {
 		"message":     {viper.GetString("email.message")},
 	}
 
-	url := email.Flags().Lookup("url")
+	url := viper.GetString("email.url")
 	req, err := http.NewRequest("POST", url, strings.NewReader(parameters.Encode()))
 	if err != nil {
 		log.Fatal(err.Error())
