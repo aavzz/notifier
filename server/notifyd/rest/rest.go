@@ -8,7 +8,7 @@ import (
 	"github.com/aavzz/daemon/log"
 	"github.com/aavzz/daemon/pid"
 	"github.com/aavzz/daemon/signal"
-	"github.com/aavzz/notifier/server/stubd/rest/api1"
+	"github.com/aavzz/notifier/server/notifyd/rest/api1"
 	"github.com/gorilla/mux"
 	"github.com/spf13/viper"
 	"net/http"
