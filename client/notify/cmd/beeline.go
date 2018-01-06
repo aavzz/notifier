@@ -27,11 +27,11 @@ func beelineCommand(cmd *cobra.Command, args []string) {
 
 	parameters := url.Values{
 		"channel": {"beeline"},
-		"recipients": {viper.GetString("recipients")},
-		"message":     {viper.GetString("message")},
+		"recipients": {viper.GetString("beeline.recipients")},
+		"message":     {viper.GetString("beeline.message")},
 	}
 
-	url := beeline.Flags().Lookup("url")
+	url := viper.GetString("beeline.url")
 	req, err := http.NewRequest("POST", url, strings.NewReader(parameters.Encode()))
 	if err != nil {
 		log.Fatal(err.Error())
