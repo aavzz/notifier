@@ -3,7 +3,7 @@ package cmd
 import (
 	"crypto/tls"
 	"encoding/json"
-	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -27,8 +27,8 @@ func beelineCommand(cmd *cobra.Command, args []string) {
 
 	parameters := url.Values{
 		"channel": {"beeline"},
-		"recipients": {beeline.Flags().Lookup("recipients")},
-		"message":     {beeline.Flags().Lookup("message")},
+		"recipients": {viper.GetString("recipients")},
+		"message":     {viper.GetString("message")},
 	}
 
 	url := beeline.Flags().Lookup("url")
