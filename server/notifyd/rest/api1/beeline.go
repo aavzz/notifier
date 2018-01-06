@@ -53,18 +53,22 @@ func sendMessageBeeline(numbers string, message string) error {
 			defer resp.Body.Close()
 		}
 
-		var v Output
-		body, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			return err
-		}
-		err = xml.Unmarshal(body, &v)
-		if err != nil {
-			return err
-		}
+		if resp.StatusCode == 200 {
+			body, err := ioutil.ReadAll(resp.Body)
+			if err != nil {
+				return err
+			}
+			var v Output
+			err = xml.Unmarshal(body, &v)
+			if err != nil {
+				return err
+			}
 
-		if v.Errors != nil {
-			return errors.New(fmt.Sprintf("Provider output: %q", v.Errors))
+			if v.Errors != nil {
+				return errors.New(fmt.Sprintf("Provider output: %q", v.Errors))
+			}
+		} else {
+			return errors.New(fmt.Sprintf("Provider output: %s", resp.Status))
 		}
 	}
 	return nil
