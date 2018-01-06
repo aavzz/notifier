@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"github.com/spf13/viper"
+	"github.com/spf13/cobra"
 	"io/ioutil"
 	"log"
 	"net/http"
