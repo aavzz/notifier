@@ -40,7 +40,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		if phones != "" && msg != "" {
 			if err := sendMessageBeeline(phones, msg); err == nil {
 				resp.Error = 0
-				resp.ErrorMsg = "Message" + msg + "sent via" + channel + "to" + phones
+				resp.ErrorMsg = "Message `" + msg + "` sent via " + channel + " to " + phones
 				if err := ret.Encode(resp); err != nil {
 					log.Error(err.Error())
 				}
@@ -53,7 +53,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			}
 		} else {
 			resp.Error = 1
-			resp.ErrorMsg = "Failed to send message via" + channel
+			resp.ErrorMsg = "Failed to send message via " + channel
 			if err := ret.Encode(resp); err != nil {
 				log.Error(err.Error())
 			}
