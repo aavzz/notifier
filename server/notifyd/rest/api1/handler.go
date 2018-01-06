@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"regexp"
 	"strings"
+	"fmt"
 )
 
 // Handler calls the right function to send message via specified channel.
@@ -73,7 +74,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		if emails != nil && msg != "" {
 			if err := sendMessageEmail(senderName, senderAddress[0], emails, subject, msg); err == nil {
 				resp.Error = 0
-				resp.ErrorMsg = "Message" + msg + "sent via" + channel + "to" + emails
+				resp.ErrorMsg = "Message" + msg + "sent via" + channel + "to" + fmt.Sprintf("%q",emails)
 				if err := ret.Encode(resp); err != nil {
 					log.Error(err.Error())
 				}
