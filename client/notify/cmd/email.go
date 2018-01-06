@@ -3,7 +3,7 @@ package cmd
 import (
 	"crypto/tls"
 	"encoding/json"
-	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -27,11 +27,11 @@ func emailCommand(cmd *cobra.Command, args []string) {
 
 	parameters := url.Values{
 		"channel": {"email"},
-		"recipients": {email.Flags().Lookup("recipients")},
-		"sender_name": {email.Flags().Lookup("sender-name")},
-		"sender_address": {email.Flags().Lookup("sender-address")},
-		"subject": {email.Flags().Lookup("subject")},
-		"message":     {email.Flags().Lookup("message")},
+		"recipients": {viper.GetString("email.recipients")},
+		"sender_name": {viper.GetString("email.sender-name")},
+		"sender_address": {viper.GetString("email.sender-address")},
+		"subject": {viper.GetString("email.subject")},
+		"message":     {viper.GetString("email.message")},
 	}
 
 	url := email.Flags().Lookup("url")
