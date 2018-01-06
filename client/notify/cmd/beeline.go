@@ -52,20 +52,24 @@ func beelineCommand(cmd *cobra.Command, args []string) {
 		defer resp.Body.Close()
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal(err.Error())
-	}
+	if resp.StatusCode == 200 {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			log.Fatal(err.Error())
+		}
 
-	var v JResp
-	if err := json.Unmarshal(body, &v); err != nil {
-		log.Fatal(err)
-	}
+		var v JResp
+		if err := json.Unmarshal(body, &v); err != nil {
+			log.Fatal(err)
+		}
 
-	if v.Error == 0 {
-		log.Print("Message sent successfully")
+		if v.Error == 0 {
+			log.Print("Message sent successfully")
+		} else {
+			log.Print(v.ErrorMsg)
+		}
 	} else {
-		log.Print(v.ErrorMsg)
+		log.Print(resp.Status)	
 	}
 }
 
