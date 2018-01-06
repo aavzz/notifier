@@ -14,7 +14,7 @@ import (
 
 var beeline = &cobra.Command{
 	Use:   "beeline",
-	Short: "sends SMS via beeline",
+	Short: "Sends an SMS via beeline",
 	Long:  `Instructs notifyd to send SMS via beeline`,
 	Run:   beelineCommand,
 }
