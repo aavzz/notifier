@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/aavzz/notifier/client/notifyd/cmd"
+	"github.com/aavzz/notifier/client/notify/cmd"
 )
 
 func main() {
