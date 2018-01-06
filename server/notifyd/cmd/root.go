@@ -57,16 +57,16 @@ func notifydCommand(cmd *cobra.Command, args []string) {
 
 // Execute starts notifyd execution
 func Execute() {
-	stubd.Flags().StringP("config", "c", "/etc/notifyd.conf", "configuration file (default: /etc/notifyd.conf)")
-	stubd.Flags().StringP("pidfile", "p", "/var/run/notifyd.pid", "PID file (default: /var/run/notifyd.pid)")
-	stubd.Flags().StringP("address", "a", "127.0.0.1:8084", "address and port to bind to (default: 127.0.0.1:8084)")
-	stubd.Flags().BoolP("daemonize", "d", false, "run as a daemon (default: no)")
-	viper.BindPFlag("config", stubd.Flags().Lookup("config"))
-	viper.BindPFlag("pidfile", stubd.Flags().Lookup("pidfile"))
-	viper.BindPFlag("address", stubd.Flags().Lookup("address"))
-	viper.BindPFlag("daemonize", stubd.Flags().Lookup("daemonize"))
+	notifyd.Flags().StringP("config", "c", "/etc/notifyd.conf", "configuration file (default: /etc/notifyd.conf)")
+	notifyd.Flags().StringP("pidfile", "p", "/var/run/notifyd.pid", "PID file (default: /var/run/notifyd.pid)")
+	notifyd.Flags().StringP("address", "a", "127.0.0.1:8084", "address and port to bind to (default: 127.0.0.1:8084)")
+	notifyd.Flags().BoolP("daemonize", "d", false, "run as a daemon (default: no)")
+	viper.BindPFlag("config", notifyd.Flags().Lookup("config"))
+	viper.BindPFlag("pidfile", notifyd.Flags().Lookup("pidfile"))
+	viper.BindPFlag("address", notifyd.Flags().Lookup("address"))
+	viper.BindPFlag("daemonize", notifyd.Flags().Lookup("daemonize"))
 
-	if err := stubd.Execute(); err != nil {
+	if err := notifyd.Execute(); err != nil {
 		log.Fatal(err.Error())
 	}
 }
