@@ -13,8 +13,8 @@ import (
 )
 
 var email = &cobra.Command{
-	Use:   "notify email",
-	Short: "sends email",
+	Use:   "email",
+	Short: "Sends an email",
 	Long:  `Instructs notifyd to send message via local mailserver`,
 	Run:   emailCommand,
 }
