@@ -1,15 +1,13 @@
 /*
-notifyd sends messages via vifferent providers
+notifyd sends messages via different providers
 (sms, email, etc.)
 */
 package main
 
 import (
-	. "github.com/aavzz/notifier/setup"
-	. "github.com/aavzz/notifier/setup/pidfile"
+	"github.com/aavzz/notifier/server/notifyd/cmd"
 )
 
 func main() {
-	Setup()
-	RemovePidFile()
+	cmd.Execute()
 }

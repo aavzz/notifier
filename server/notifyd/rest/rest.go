@@ -4,12 +4,15 @@ Package rest implements REST interface of notifyd.
 package rest
 
 import (
-	"github.com/aavzz/notifier/rest/api1"
-	. "github.com/aavzz/notifier/setup/cmdlnopts"
-	. "github.com/aavzz/notifier/setup/syslog"
+	"context"
+	"github.com/aavzz/daemon/log"
+	"github.com/aavzz/daemon/pid"
+	"github.com/aavzz/daemon/signal"
+	"github.com/aavzz/notifier/server/stubd/rest/api1"
 	"github.com/gorilla/mux"
+	"github.com/spf13/viper"
 	"net/http"
-	"os"
+	"time"
 )
 
 // InitHttpp sets up router.
@@ -17,9 +20,22 @@ func InitHttp() {
 	r := mux.NewRouter()
 	r.HandleFunc("/api1", api1.Handler).Methods("GET")
 
-	err := http.ListenAndServe(ConfigAddress(), r)
-	if err != nil {
-		SysLog.Err(err.Error())
-		os.Exit(1)
+	s := &http.Server{
+		Addr:     viper.GetString("address"),
+		Handler:  r,
+		ErrorLog: log.Logger("notifyd"),
+	}
+
+	if viper.GetBool("daemonize") == true {
+		signal.Quit(func() {
+			ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+			log.Info("SIGQUIT received, exitting gracefully")
+			s.Shutdown(ctx)
+			pid.Remove()
+		})
+	}
+
+	if err := s.ListenAndServe(); err != nil {
+		log.Fatal(err.Error())
 	}
 }

@@ -4,8 +4,8 @@ Package api1 implements version 1 of notifyd API.
 package api1
 
 import (
-	"fmt"
-	. "github.com/aavzz/notifier/setup/syslog"
+	"encoding/json"
+	"github.com/aavzz/daemon/log"
 	"net/http"
 	"regexp"
 	"strings"
@@ -13,6 +13,16 @@ import (
 
 // Handler calls the right function to send message via specified channel.
 func Handler(w http.ResponseWriter, r *http.Request) {
+
+	//Must be exportable
+	type JResponse struct {
+		Error    int
+		ErrorMsg string
+	}
+
+	var resp JResponse
+	ret := json.NewEncoder(w)
+
 	channel := r.FormValue("channel")
 	recipients := r.FormValue("recipients")
 	message := r.FormValue("message")
@@ -27,13 +37,27 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		}
 		msg := message[:l]
 		if phones != "" && msg != "" {
-			SysLog.Info(fmt.Sprintf("Message '%s' sent via beeline to %s", msg, phones))
-			sendMessageBeeline(phones, msg)
+			if err := sendMessageBeeline(phones, msg); err == nil {
+				resp.Error = 0
+				resp.ErrorMsg = "Message" + msg + "sent via" + channel + "to" + phones
+				if err := ret.Encode(resp); err != nil {
+					log.Error(err.Error())
+				}
+			} else {
+				resp.Error = 1
+                                resp.ErrorMsg = err.Error()
+                                if err := ret.Encode(resp); err != nil {
+                                        log.Error(err.Error())
+                                }	
+			}
 		} else {
-			SysLog.Info(fmt.Sprintf("Failed to send message via beeline"))
+			resp.Error = 1
+			resp.ErrorMsg = "Failed to send message via" + channel
+			if err := ret.Encode(resp); err != nil {
+				log.Error(err.Error())
+			}
 		}
 	case "email":
-
 		senderName := r.FormValue("sender_name")
 		senderAddr := r.FormValue("sender_address")
 		subject := r.FormValue("subject")
@@ -47,12 +71,31 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		}
 		msg := message[:l]
 		if emails != nil && msg != "" {
-			SysLog.Info(fmt.Sprintf("Message '%s' sent via email to %q", msg, emails))
-			sendMessageEmail(senderName, senderAddress, emails, subject, msg)
+			if err := sendMessageEmail(senderName, senderAddress, emails, subject, msg); err == nil {
+				resp.Error = 0
+				resp.ErrorMsg = "Message" + msg + "sent via" + channel + "to" + emails
+				if err := ret.Encode(resp); err != nil {
+					log.Error(err.Error())
+				}
+			} else {
+				resp.Error = 1
+                                resp.ErrorMsg = err.Error()
+                                if err := ret.Encode(resp); err != nil {
+                                        log.Error(err.Error())
+                                }	
+			}
 		} else {
-			SysLog.Info(fmt.Sprintf("Failed to send message via email"))
+			resp.Error = 1
+			resp.ErrorMsg = "Failed to send message via" + channel
+			if err := ret.Encode(resp); err != nil {
+				log.Error(err.Error())
+			}
 		}
 	default:
-		SysLog.Info("No valid channel found")
+		resp.Error = 1
+		resp.ErrorMsg = "No valid channel found"
+		if err := ret.Encode(resp); err != nil {
+			log.Error(err.Error())
+		}
 	}
 }

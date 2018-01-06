@@ -1,12 +1,10 @@
 package api1
 
 import (
-	. "github.com/aavzz/notifier/setup/cfgfile"
-	. "github.com/aavzz/notifier/setup/syslog"
 	"gopkg.in/gomail.v2"
 )
 
-func sendMessageEmail(senderName string, senderAddress string, emails []string, subject string, message string) {
+func sendMessageEmail(senderName string, senderAddress string, emails []string, subject string, message string) error {
 
 	m := gomail.NewMessage()
 	m.SetHeaders(map[string][]string{
@@ -18,6 +16,7 @@ func sendMessageEmail(senderName string, senderAddress string, emails []string, 
 
 	d := gomail.Dialer{Host: "localhost", Port: 25}
 	if err := d.DialAndSend(m); err != nil {
-		SysLog.Err(err.Error())
+		return err
 	}
+	return nil
 }

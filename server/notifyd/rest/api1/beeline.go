@@ -4,71 +4,68 @@ import (
 	"crypto/tls"
 	"encoding/xml"
 	"fmt"
-	. "github.com/aavzz/notifier/setup/cfgfile"
-	. "github.com/aavzz/notifier/setup/syslog"
 	"golang.org/x/text/encoding/charmap"
+	"github.com/spf13/viper"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
+	"errors"
 )
 
-func sendMessageBeeline(numbers string, message string) {
+func sendMessageBeeline(numbers string, message string) error {
 
+	// Must be exportable
 	type Output struct {
 		Errors []string `xml:"errors>error"`
 	}
 
-	cfg, err := CfgFileContent()
+	msg, err := charmap.Windows1251.NewEncoder().String(message)
 	if err != nil {
-		SysLog.Err(err.Error())
+		return err
 	} else {
-		msg, err := charmap.Windows1251.NewEncoder().String(message)
+		parameters := url.Values{
+			"user":    {viper.GetString("beeline.Login")},
+			"pass":    {viper.GetString("beeline.Password")},
+			"sender":  {viper.GetString("beeline.Sender")},
+			"action":  {"post_sms"},
+			"target":  {numbers},
+			"message": {msg},
+		}
+
+		url := "https://beeline.amega-inform.ru/sendsms/"
+		req, err := http.NewRequest("POST", url, strings.NewReader(parameters.Encode()))
 		if err != nil {
-			SysLog.Err(err.Error())
-		} else {
-			parameters := url.Values{
-				"user":    {cfg.Beeline.Login},
-				"pass":    {cfg.Beeline.Password},
-				"sender":  {cfg.Beeline.Sender},
-				"action":  {"post_sms"},
-				"target":  {numbers},
-				"message": {msg},
-			}
+			return err
+		}
+		req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=windows-1251")
 
-			url := "https://beeline.amega-inform.ru/sendsms/"
-			req, err := http.NewRequest("POST", url, strings.NewReader(parameters.Encode()))
-			if err != nil {
-				SysLog.Err(err.Error())
-			}
-			req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=windows-1251")
+		tr := &http.Transport{
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		}
+		c := &http.Client{Transport: tr}
 
-			tr := &http.Transport{
-				TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-			}
-			c := &http.Client{Transport: tr}
+		resp, err := c.Do(req)
+		if err != nil {
+			return err
+		}
+		if resp != nil {
+			defer resp.Body.Close()
+		}
 
-			resp, err := c.Do(req)
-			if err != nil {
-				SysLog.Err(err.Error())
-			}
-			if resp != nil {
-				defer resp.Body.Close()
-			}
+		var v Output
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		err = xml.Unmarshal(body, &v)
+		if err != nil {
+			return err
+		}
 
-			var v Output
-			body, err := ioutil.ReadAll(resp.Body)
-			if err != nil {
-				SysLog.Err(err.Error())
-			}
-			err = xml.Unmarshal(body, &v)
-			if err != nil {
-				SysLog.Err(err.Error())
-			}
-
-			if v.Errors != nil {
-				SysLog.Err(fmt.Sprintf("Provider output: %q", v.Errors))
-			}
+		if v.Errors != nil {
+			return errors.New(fmt.Sprintf("Provider output: %q", v.Errors))
 		}
 	}
+	return nil
 }
