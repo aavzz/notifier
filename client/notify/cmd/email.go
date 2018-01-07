@@ -18,7 +18,6 @@ var email = &cobra.Command{
 	Short: "Sends an email",
 	Long:  `Instructs notifyd to send message via local mailserver`,
 	Run:   emailCommand,
-	Args: cobra.ExactArgs(1),
 }
 
 func emailCommand(cmd *cobra.Command, args []string) {
