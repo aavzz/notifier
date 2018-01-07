@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/aavzz/misc/pipe"
 	"crypto/tls"
 	"encoding/json"
 	"github.com/spf13/viper"
@@ -11,7 +12,6 @@ import (
 	"net/url"
 	"strings"
 	"os"
-	"io"
 )
 
 var beeline = &cobra.Command{
@@ -29,12 +29,10 @@ func beelineCommand(cmd *cobra.Command, args []string) {
 	}
 
 	//read message from stdin (pipe)
-	buf := make([]byte, 480)
-	num, err := os.Stdin.Read(buf)
-	if err != nil && err != io.EOF {
+	message, err := pipe.Read(480)
+	if err != nil {
 		log.Fatal(err.Error())
 	}
-	message := string(buf[:num])
 	
 	parameters := url.Values{
 		"channel": {"beeline"},
