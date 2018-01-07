@@ -26,10 +26,18 @@ func beelineCommand(cmd *cobra.Command, args []string) {
 		ErrorMsg string
 	}
 
+	//read message from stdin (pipe)
+	buf := make([]int, 480)
+	num, err := os.Stdin.Read(buf)
+	if err != nil && err != io.EOF {
+		log.Fatal(err.Error())
+	}
+	message := string(buf[:num])
+	
 	parameters := url.Values{
 		"channel": {"beeline"},
 		"recipients": {viper.GetString("beeline.recipients")},
-		"message":     {viper.GetString("beeline.message")},
+		"message":     {message},
 	}
 
 	url := viper.GetString("beeline.url")
