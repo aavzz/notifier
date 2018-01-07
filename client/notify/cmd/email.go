@@ -3,6 +3,7 @@ package cmd
 import (
 	"crypto/tls"
 	"encoding/json"
+	"github.com/aavzz/misc/pipe"
 	"github.com/spf13/viper"
 	"github.com/spf13/cobra"
 	"io/ioutil"
@@ -11,7 +12,6 @@ import (
 	"net/url"
 	"strings"
 	"os"
-	"io"
 )
 
 var email = &cobra.Command{
@@ -29,12 +29,10 @@ func emailCommand(cmd *cobra.Command, args []string) {
 	}
 
 	//read message from stdin (pipe)
-	buf := make([]byte, 480)
-	num, err := os.Stdin.Read(buf)
-	if err != nil && err != io.EOF {
+	message, err := pipe.Read(1024)
+	if err != nil {
 		log.Fatal(err.Error())
 	}
-	message := string(buf[:num])
 	
 	parameters := url.Values{
 		"channel": {"email"},
