@@ -1,0 +1,48 @@
+
+1. Install notifyd and notify
+
+#pkg add /path/to/aavzz-notifier::exec-server
+#pkg add /path/to/aavzz-notifier::exec-client
+
+2. Check notifydd failure when config file is not available
+
+#/usr/sbin/notifyd (open /etc/notifyd.conf: no such file or directory)
+
+3. Check invalid flag failure
+
+#/usr/sbin/notifyd -c /etc-dist/notifyd.conf --invalid-flag
+Error: unknown flag: --invalid-flag
+Usage:
+  notifyd [flags]
+...
+
+#/usr/sbin/notify email --invalid-flag
+Error: unknown flag: --invalid-flag
+Usage:
+  notify email [flags]
+...
+
+
+4. Check non-daemon execution
+
+#/usr/sbin/notifyd -c /etc-dist/notifyd.conf
+#ls -l /var/run (no notifyd.pid)
+#netstat -an (127.0.0.1:8082)
+#echo 'qwe' | /usr/bin/notify beeline -u http://127.0.0.1:8084 -r phonenumber (404)
+#echo 'qwe' | /usr/bin/notify beeline -u http://127.0.0.1:8084/api1 -r phonenumber (Message sent)
+^C
+
+5. Check daemon and client 
+
+#/usr/sbin/notifyd -c /etc-dist/notifyd.conf -d
+#/usr/sbin/notifyd -c /etc-dist/notifyd.conf -d (syslog: Another process is already running)
+#ls -l /var/run (notifyd.pid)
+#netstat -an (127.0.0.1:8084)
+#echo 'qwe' | /usr/bin/notify -u http://127.0.0.1:8084 -r phonenumber (Key parameter not set)
+#echo 'qwe' | /usr/bin/notify -u http://127.0.0.1:8084/api1 -r phonenumber (Message sent)
+edit /etc-dist/notifyd.conf (password change)
+#killall -HUP notifyd (syslog: SIGHUP received, re-reading configuration file)
+#echo 'qwe' | /usr/bin/notify -u http://127.0.0.1:8084/api1 -r phonenumber (wrong password)
+#killall -QUIT notifyd (syslog: SIGQUIT received, exitting gracefully)
+#/usr/sbin/notifyd -c /etc-dist/notifyd.conf -d
+#killall -TERM notifyd (syslog: SIGTERM received, exitting)
