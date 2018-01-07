@@ -10,6 +10,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"os"
+	"io"
 )
 
 var beeline = &cobra.Command{
