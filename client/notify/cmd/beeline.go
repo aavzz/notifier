@@ -29,7 +29,7 @@ func beelineCommand(cmd *cobra.Command, args []string) {
 	}
 
 	//read message from stdin (pipe)
-	buf := make([]int, 480)
+	buf := make([]byte, 480)
 	num, err := os.Stdin.Read(buf)
 	if err != nil && err != io.EOF {
 		log.Fatal(err.Error())
