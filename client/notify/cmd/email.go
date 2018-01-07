@@ -40,7 +40,7 @@ func emailCommand(cmd *cobra.Command, args []string) {
 		"sender_name": {viper.GetString("email.sender-name")},
 		"sender_address": {viper.GetString("email.sender-address")},
 		"subject": {viper.GetString("email.subject")},
-		"message": {message}
+		"message": {message},
 	}
 
 	url := viper.GetString("email.url")
