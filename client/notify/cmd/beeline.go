@@ -11,7 +11,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"os"
 )
 
 var beeline = &cobra.Command{
