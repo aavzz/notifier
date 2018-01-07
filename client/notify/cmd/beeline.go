@@ -18,7 +18,7 @@ var beeline = &cobra.Command{
 	Short: "Sends an SMS via beeline",
 	Long:  `Instructs notifyd to send SMS via beeline`,
 	Run:   beelineCommand,
-	Args: ExactArgs(1),
+	Args: cobra.ExactArgs(1),
 }
 
 func beelineCommand(cmd *cobra.Command, args []string) {
