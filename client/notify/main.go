@@ -10,7 +10,7 @@ func main() {
 	// check if stdin is connected to a pipe,
 	ok, err := pipe.CheckStdin()
 	if err != nil {
-		log fatal(err.Error())
+		log.Fatal(err.Error())
 	}
 	if ok != true {
 		log.Fatal("stdin not connected to pipe")		
