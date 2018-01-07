@@ -26,13 +26,21 @@ func emailCommand(cmd *cobra.Command, args []string) {
 		ErrorMsg string
 	}
 
+	//read message from stdin (pipe)
+	buf := make([]int, 480)
+	num, err := os.Stdin.Read(buf)
+	if err != nil && err != io.EOF {
+		log.Fatal(err.Error())
+	}
+	message := string(buf[:num])
+	
 	parameters := url.Values{
 		"channel": {"email"},
 		"recipients": {viper.GetString("email.recipients")},
 		"sender_name": {viper.GetString("email.sender-name")},
 		"sender_address": {viper.GetString("email.sender-address")},
 		"subject": {viper.GetString("email.subject")},
-		"message":     {viper.GetString("email.message")},
+		"message": {message}
 	}
 
 	url := viper.GetString("email.url")
