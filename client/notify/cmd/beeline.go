@@ -1,11 +1,11 @@
 package cmd
 
 import (
-	"github.com/aavzz/misc/pipe"
 	"crypto/tls"
 	"encoding/json"
-	"github.com/spf13/viper"
+	"github.com/aavzz/misc/pipe"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -32,11 +32,11 @@ func beelineCommand(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	
+
 	parameters := url.Values{
-		"channel": {"beeline"},
+		"channel":    {"beeline"},
 		"recipients": {viper.GetString("beeline.recipients")},
-		"message":     {message},
+		"message":    {message},
 	}
 
 	url := viper.GetString("beeline.url")
@@ -76,7 +76,6 @@ func beelineCommand(cmd *cobra.Command, args []string) {
 			log.Print(v.ErrorMsg)
 		}
 	} else {
-		log.Print(resp.Status)	
+		log.Print(resp.Status)
 	}
 }
-

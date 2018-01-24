@@ -5,11 +5,11 @@ package api1
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/aavzz/daemon/log"
 	"net/http"
 	"regexp"
 	"strings"
-	"fmt"
 )
 
 // Handler calls the right function to send message via specified channel.
@@ -30,7 +30,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	switch channel {
 	case "beeline":
-		re := regexp.MustCompile(`\+7\d{10}`)
+		re := regexp.MustCompile(`\+\d+`)
 		phones := strings.Join(re.FindAllString(recipients, 5), ",")
 		l := len(message)
 		if l > 480 {
@@ -46,10 +46,39 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 				}
 			} else {
 				resp.Error = 1
-                                resp.ErrorMsg = err.Error()
-                                if err := ret.Encode(resp); err != nil {
-                                        log.Error(err.Error())
-                                }	
+				resp.ErrorMsg = err.Error()
+				if err := ret.Encode(resp); err != nil {
+					log.Error(err.Error())
+				}
+			}
+		} else {
+			resp.Error = 1
+			resp.ErrorMsg = "Failed to send message via " + channel
+			if err := ret.Encode(resp); err != nil {
+				log.Error(err.Error())
+			}
+		}
+	case "smsc":
+		re := regexp.MustCompile(`\+\d+`)
+		phones := strings.Join(re.FindAllString(recipients, 5), ",")
+		l := len(message)
+		if l > 800 {
+			l = 800
+		}
+		msg := message[:l]
+		if phones != "" && msg != "" {
+			if err := sendMessageSmsc(phones, msg); err == nil {
+				resp.Error = 0
+				resp.ErrorMsg = "Message `" + msg + "` sent via " + channel + " to " + phones
+				if err := ret.Encode(resp); err != nil {
+					log.Error(err.Error())
+				}
+			} else {
+				resp.Error = 1
+				resp.ErrorMsg = err.Error()
+				if err := ret.Encode(resp); err != nil {
+					log.Error(err.Error())
+				}
 			}
 		} else {
 			resp.Error = 1
@@ -74,16 +103,16 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		if emails != nil && msg != "" {
 			if err := sendMessageEmail(senderName, senderAddress[0], emails, subject, msg); err == nil {
 				resp.Error = 0
-				resp.ErrorMsg = "Message" + msg + "sent via" + channel + "to" + fmt.Sprintf("%q",emails)
+				resp.ErrorMsg = "Message" + msg + "sent via" + channel + "to" + fmt.Sprintf("%q", emails)
 				if err := ret.Encode(resp); err != nil {
 					log.Error(err.Error())
 				}
 			} else {
 				resp.Error = 1
-                                resp.ErrorMsg = err.Error()
-                                if err := ret.Encode(resp); err != nil {
-                                        log.Error(err.Error())
-                                }	
+				resp.ErrorMsg = err.Error()
+				if err := ret.Encode(resp); err != nil {
+					log.Error(err.Error())
+				}
 			}
 		} else {
 			resp.Error = 1

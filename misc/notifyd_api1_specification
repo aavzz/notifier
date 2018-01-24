@@ -10,12 +10,12 @@ All responses are sent as json objects
       recipients=<phonelist>
       message=<sms text to send>
 
-      phones are in 10-digit format (+7 is added automatically)
+      phones are in full international format
       phones in the list are comma-separated
 
       e.g. (not url-encoded)
 
-      channel=beeline&recipients=9212223344,9112223344&message=warning!!!
+      channel=beeline&recipients=+79212223344,+79112223344&message=warning!!!
 
    response
 
@@ -29,7 +29,34 @@ All responses are sent as json objects
           Error = N
           ErrorMsg = "Error message"
 
-2. Send email via local server:
+2. Send SMS via smsc
+
+   request
+
+      channel=smsc
+      recipients=<phonelist>
+      message=<sms text to send>
+
+      phones are in full international format
+      phones in the list are comma-separated
+
+      e.g. (not url-encoded)
+
+      channel=beeline&recipients=+79212223344,+79112223344&message=warning!!!
+
+   response
+
+       Success
+ 
+          Error = 0
+          ErrorMsg = ""
+
+       Failure
+
+          Error = N
+          ErrorMsg = "Error message"
+
+3. Send email via local server:
 
    request
 

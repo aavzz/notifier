@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-func sendMessageBeeline(numbers string, message string) error {
+func sendMessageSmsc(numbers string, message string) error {
 
 	// Must be exportable
 	type Output struct {
@@ -25,15 +25,14 @@ func sendMessageBeeline(numbers string, message string) error {
 		return err
 	} else {
 		parameters := url.Values{
-			"user":    {viper.GetString("beeline.Login")},
-			"pass":    {viper.GetString("beeline.Password")},
-			"sender":  {viper.GetString("beeline.Sender")},
-			"action":  {"post_sms"},
-			"target":  {numbers},
-			"message": {msg},
+			"login":  {viper.GetString("smsc.Login")},
+			"psw":    {viper.GetString("smsc.Password")},
+			"phones": {numbers},
+			"mes":    {msg},
+			"fmt":    3,
 		}
 
-		url := "https://beeline.amega-inform.ru/sendsms/"
+		url := "https://smsc.ru/sys/send.php"
 		req, err := http.NewRequest("POST", url, strings.NewReader(parameters.Encode()))
 		if err != nil {
 			return err
@@ -64,8 +63,8 @@ func sendMessageBeeline(numbers string, message string) error {
 				return err
 			}
 
-			if v.Errors != nil {
-				return errors.New(fmt.Sprintf("Provider output: %q", v.Errors))
+			if v.error != nil && v.error != "" {
+				return errors.New(fmt.Sprintf("Provider output: %q", v.error))
 			}
 		} else {
 			return errors.New(fmt.Sprintf("Provider output: %s", resp.Status))

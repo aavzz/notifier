@@ -13,14 +13,14 @@ import (
 	"strings"
 )
 
-var email = &cobra.Command{
-	Use:   "email",
-	Short: "Sends an email",
-	Long:  `Instructs notifyd to send message via local mailserver`,
-	Run:   emailCommand,
+var smsc = &cobra.Command{
+	Use:   "smsc",
+	Short: "Sends an SMS via smsc",
+	Long:  `Instructs notifyd to send SMS via smsc`,
+	Run:   smscCommand,
 }
 
-func emailCommand(cmd *cobra.Command, args []string) {
+func smscCommand(cmd *cobra.Command, args []string) {
 
 	type JResp struct {
 		Error    int
@@ -28,21 +28,18 @@ func emailCommand(cmd *cobra.Command, args []string) {
 	}
 
 	//read message from stdin (pipe)
-	message, err := pipe.Read(1024)
+	message, err := pipe.Read(800)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
 	parameters := url.Values{
-		"channel":        {"email"},
-		"recipients":     {viper.GetString("email.recipients")},
-		"sender_name":    {viper.GetString("email.sender-name")},
-		"sender_address": {viper.GetString("email.sender-address")},
-		"subject":        {viper.GetString("email.subject")},
-		"message":        {message},
+		"channel":    {"smsc"},
+		"recipients": {viper.GetString("smsc.recipients")},
+		"message":    {message},
 	}
 
-	url := viper.GetString("email.url")
+	url := viper.GetString("smsc.url")
 	req, err := http.NewRequest("POST", url, strings.NewReader(parameters.Encode()))
 	if err != nil {
 		log.Fatal(err.Error())

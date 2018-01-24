@@ -13,8 +13,8 @@ func main() {
 		log.Fatal(err.Error())
 	}
 	if ok != true {
-		log.Fatal("stdin not connected to pipe")		
-	}	
-	
+		log.Fatal("stdin not connected to pipe")
+	}
+
 	cmd.Execute()
 }
