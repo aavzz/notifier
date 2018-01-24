@@ -2,7 +2,7 @@ package api1
 
 import (
 	"crypto/tls"
-	"encoding/xml"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/spf13/viper"
@@ -17,7 +17,7 @@ func sendMessageSmsc(numbers string, message string) error {
 
 	// Must be exportable
 	type Output struct {
-		Errors []string `xml:"errors>error"`
+		error string
 	}
 
 	msg, err := charmap.Windows1251.NewEncoder().String(message)
@@ -29,7 +29,7 @@ func sendMessageSmsc(numbers string, message string) error {
 			"psw":    {viper.GetString("smsc.Password")},
 			"phones": {numbers},
 			"mes":    {msg},
-			"fmt":    {3},
+			"fmt":    {"3"},
 		}
 
 		url := "https://smsc.ru/sys/send.php"
@@ -58,7 +58,7 @@ func sendMessageSmsc(numbers string, message string) error {
 				return err
 			}
 			var v Output
-			err = xml.Unmarshal(body, &v)
+			err = json.Unmarshal(body, &v)
 			if err != nil {
 				return err
 			}
