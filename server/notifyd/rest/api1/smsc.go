@@ -29,7 +29,7 @@ func sendMessageSmsc(numbers string, message string) error {
 			"psw":    {viper.GetString("smsc.Password")},
 			"phones": {numbers},
 			"mes":    {msg},
-			"fmt":    3,
+			"fmt":    {3},
 		}
 
 		url := "https://smsc.ru/sys/send.php"
