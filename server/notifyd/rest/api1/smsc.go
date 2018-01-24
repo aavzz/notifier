@@ -63,7 +63,7 @@ func sendMessageSmsc(numbers string, message string) error {
 				return err
 			}
 
-			if v.error != nil && v.error != "" {
+			if v.error != "" {
 				return errors.New(fmt.Sprintf("Provider output: %q", v.error))
 			}
 		} else {
