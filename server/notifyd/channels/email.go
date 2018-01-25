@@ -8,8 +8,9 @@ import (
 // SendMessageEmail sends message via local email server
 func SendMessageEmail(senderName, senderAddress, recipients, subject, message string) error {
 
-        emails := regexp.MustCompile(`\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3}`).FindAllString(recipients,0)
-        senderAddress = re.FindAllString(senderAddr, 1)
+	re := regexp.MustCompile(`\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3}`)
+        emails := re.FindAllString(recipients, 0)
+	senderAddr := re.FindAllString(senderAddress, 1)
         l := len(message)
         if l > 1000 {
                 l = 1000
@@ -18,7 +19,7 @@ func SendMessageEmail(senderName, senderAddress, recipients, subject, message st
 
 	m := gomail.NewMessage()
 	m.SetHeaders(map[string][]string{
-		"From":    {m.FormatAddress(senderAddress, senderName)},
+		"From":    {m.FormatAddress(senderAddr[0], senderName)},
 		"To":      emails,
 		"Subject": {subject},
 	})
