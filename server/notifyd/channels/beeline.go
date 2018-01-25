@@ -26,7 +26,7 @@ func SendMessageBeeline(login, pass, sender, recipients, msg string) error {
 	if err != nil {
 		return err
 	} else {
-                recipients := strings.Join(regexp.MustCompile(`\+\d+`).FindAllString(recipients), ",")
+                recipients := strings.Join(regexp.MustCompile(`\+\d+`).FindAllString(recipients, 0), ",")
 
 		l := len(msg)
 		if l > 480 {
