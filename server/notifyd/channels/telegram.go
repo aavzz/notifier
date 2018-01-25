@@ -9,11 +9,6 @@ import (
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
-// Must be exportable
-type TelegramResponse struct {
-	error string
-}
-
 var bot *tgbotapi.BotAPI
 
 // InitTelegram initializes telegram bot
