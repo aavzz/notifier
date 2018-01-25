@@ -34,7 +34,6 @@ func SendMessageBeeline(login, pass, sender, recipients, msg string) error {
 		}
 		msg := msg[:l]
 
-		url := "https://beeline.amega-inform.ru/sendsms/"
 		params := url.Values{
 			"user":    {login},
 			"pass":    {pass},
@@ -45,7 +44,7 @@ func SendMessageBeeline(login, pass, sender, recipients, msg string) error {
 		}
 
 		c := &http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}}
-		resp, err := c.PostForm(url, params)
+		resp, err := c.PostForm("https://beeline.amega-inform.ru/sendsms/", params)
 		if err != nil {
 			return err
 		}
