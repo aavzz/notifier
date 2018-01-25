@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/aavzz/daemon/log"
-	"github.com/aavzz/server/notifyd/channels"
+	"github.com/aavzz/notifier/server/notifyd/channels"
 	"net/http"
 	"regexp"
 	"strings"
