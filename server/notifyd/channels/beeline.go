@@ -11,7 +11,6 @@ import (
 	"regexp"
 	"golang.org/x/text/encoding/charmap"
 	"strings"
-	"github.com/aavzz/daemon/log"
 )
 
 // BeelineResponse holds the response from beeline
@@ -27,10 +26,8 @@ func SendMessageBeeline(login, pass, sender, recipients, msg string) error {
 	if err != nil {
 		return err
 	} else {
-                recipients := strings.Join(regexp.MustCompile(`\+\d+`).FindAllString(recipients, 0), ",")
+                recipients := strings.Join(regexp.MustCompile(`\+\d+`).FindAllString(recipients, -1), ",")
 
-		log.Info(recipients)
-		
 		l := len(msg)
 		if l > 480 {
 			l = 480
