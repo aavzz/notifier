@@ -44,7 +44,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			if err := channels.SendMessageSmsc(viper.GetString("beeline.login"),
 								viper.GetString("beeline.password"),
 								viper.GetString("beeline.sender"),
-								recipients, msg); err == nil {
+								recipients, message); err == nil {
 				reportSuccess(w, message, channel, recipients)
 			} else {
 				reportError(w, err)
@@ -54,7 +54,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		}
 	case "telegram":
 		if recipients != "" && message != "" {
-			if err := channels.SendMessageTelegram(viper.GetInt64("telegtam." + recipients + "_chatID"), msg); err == nil {
+			if err := channels.SendMessageTelegram(viper.GetInt64("telegtam." + recipients + "_chatID"), message); err == nil {
 				reportSuccess(w, message, channel, recipients)
 			} else {
 				reportError(w, err)
@@ -68,7 +68,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		subject := r.FormValue("subject")
 
 		if recipients != "" && message != "" {
-			if err := channels.SendMessageEmail(senderName, senderAddr, recipients, subject, msg); err == nil {
+			if err := channels.SendMessageEmail(senderName, senderAddr, recipients, subject, message); err == nil {
 				reportSuccess(w, message, channel, recipients)
 			} else {
 				reportError(w, err)
