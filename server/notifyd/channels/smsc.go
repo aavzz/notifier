@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"golang.org/x/text/encoding/charmap"
         "strings"
+	"regexp"
 )
 
 // SmscResponse holds the response from smsc
