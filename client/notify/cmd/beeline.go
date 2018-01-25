@@ -10,7 +10,6 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"strings"
 )
 
 var beeline = &cobra.Command{
