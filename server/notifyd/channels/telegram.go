@@ -13,7 +13,7 @@ var bot *tgbotapi.BotAPI
 
 // InitTelegram initializes telegram bot
 func InitTelegram() {
-	err error
+	var err error
 	bot, err := tgbotapi.NewBotAPI(viper.GetString("telegram.token"))
 	if err != nil {
 		log.Error(err.Error())
