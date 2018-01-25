@@ -5,12 +5,9 @@ package api1
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/aavzz/daemon/log"
 	"github.com/aavzz/notifier/server/notifyd/channels"
 	"net/http"
-	"regexp"
-	"strings"
 	"github.com/spf13/viper"
 )
 
@@ -35,7 +32,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 							viper.GetString("beeline.password"),
 							viper.GetString("beeline.sender"),
 							recipients, message); err == nil {
-				reportSuccess(w, msg, channel, recipients)
+				reportSuccess(w, message, channel, recipients)
 			} else {
 				reportError(w, err)
 			}
@@ -43,12 +40,12 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			reportErrorString(w, "Failed to send message via " + channel)
 		}
 	case "smsc":
-		if recipients != "" && msg != "" {
+		if recipients != "" && message != "" {
 			if err := channels.SendMessageSmsc(viper.GetString("beeline.login"),
 								viper.GetString("beeline.password"),
 								viper.GetString("beeline.sender"),
 								recipients, msg); err == nil {
-				reportSuccess(w, msg, channel, recipients)
+				reportSuccess(w, message, channel, recipients)
 			} else {
 				reportError(w, err)
 			}
@@ -56,9 +53,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			reportErrorString(w, "Failed to send message via " + channel)
 		}
 	case "telegram":
-		if recipients != "" && msg != "" {
+		if recipients != "" && message != "" {
 			if err := SendMessageTelegram(viper.GetInt64("telegtam." + recipients + "_chatID"), msg); err == nil {
-				reportSuccess(w, msg, channel, recipients)
+				reportSuccess(w, message, channel, recipients)
 			} else {
 				reportError(w, err)
 			}
@@ -70,9 +67,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		senderAddr := r.FormValue("sender_address")
 		subject := r.FormValue("subject")
 
-		if recipients != "" && msg != "" {
+		if recipients != "" && message != "" {
 			if err := channels.SendMessageEmail(senderName, senderAddr, recipients, subject, msg); err == nil {
-				reportSuccess(w, msg, channel, recipients)
+				reportSuccess(w, message, channel, recipients)
 			} else {
 				reportError(w, err)
 			}
