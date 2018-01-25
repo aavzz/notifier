@@ -11,7 +11,7 @@ import (
 	"regexp"
 	"golang.org/x/text/encoding/charmap"
 	"strings"
-	"aavzz/daemon/log"
+	"github.com/aavzz/daemon/log"
 )
 
 // BeelineResponse holds the response from beeline
