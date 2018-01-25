@@ -54,7 +54,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		}
 	case "telegram":
 		if recipients != "" && message != "" {
-			if err := SendMessageTelegram(viper.GetInt64("telegtam." + recipients + "_chatID"), msg); err == nil {
+			if err := channels.SendMessageTelegram(viper.GetInt64("telegtam." + recipients + "_chatID"), msg); err == nil {
 				reportSuccess(w, message, channel, recipients)
 			} else {
 				reportError(w, err)
