@@ -41,10 +41,9 @@ func SendMessageSmsc(login, pass, sender, recipients, msg string) error {
 			"mes":    {msg},
 			"fmt":    {"3"},
 		}
-		url := "https://smsc.ru/sys/send.php"
 
 		c := &http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}}
-		resp, err := c.PostForm(url, params)
+		resp, err := c.PostForm("https://smsc.ru/sys/send.php", params)
 		if err != nil {
 			return err
 		}
