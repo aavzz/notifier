@@ -9,7 +9,7 @@ import (
 func SendMessageEmail(senderName, senderAddress, recipients, subject, message string) error {
 
 	re := regexp.MustCompile(`\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3}`)
-        emails := re.FindAllString(recipients, 0)
+        emails := re.FindAllString(recipients, -1)
 	senderAddr := re.FindAllString(senderAddress, 1)
         l := len(message)
         if l > 1000 {
