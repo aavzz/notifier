@@ -41,9 +41,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		}
 	case "smsc":
 		if recipients != "" && message != "" {
-			if err := channels.SendMessageSmsc(viper.GetString("beeline.login"),
-								viper.GetString("beeline.password"),
-								viper.GetString("beeline.sender"),
+			if err := channels.SendMessageSmsc(viper.GetString("smsc.login"),
+								viper.GetString("smsc.password"),
+								viper.GetString("smsc.sender"),
 								recipients, message); err == nil {
 				reportSuccess(w, message, channel, recipients)
 			} else {
