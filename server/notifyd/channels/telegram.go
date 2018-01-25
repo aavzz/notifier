@@ -1,11 +1,7 @@
 package channels
 
 import (
-	"encoding/json"
-	"errors"
-	"fmt"
 	"github.com/spf13/viper"
-	"io/ioutil"
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
