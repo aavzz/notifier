@@ -13,7 +13,7 @@ import (
 )
 
 var telegram = &cobra.Command{
-	Use:   "gelegram",
+	Use:   "telegram",
 	Short: "Sends a message to telegram group",
 	Long:  `Instructs notifyd to send message to telegram group`,
 	Run:   telegramCommand,
