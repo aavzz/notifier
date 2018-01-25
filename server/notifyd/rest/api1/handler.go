@@ -7,125 +7,116 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/aavzz/daemon/log"
+	"github.com/aavzz/server/notifyd/channels"
 	"net/http"
 	"regexp"
 	"strings"
+	"github.com/spf13/viper"
 )
+
+// JResponse holds notifyd response
+// Must be exportable
+type JResponse struct {
+	Error    int
+	ErrorMsg string
+}
 
 // Handler calls the right function to send message via specified channel.
 func Handler(w http.ResponseWriter, r *http.Request) {
 
-	//Must be exportable
-	type JResponse struct {
-		Error    int
-		ErrorMsg string
-	}
-
-	var resp JResponse
-	ret := json.NewEncoder(w)
-
 	channel := r.FormValue("channel")
-	recipients := r.FormValue("recipients")
 	message := r.FormValue("message")
+	recipients := r.FormValue("recipients")
 
 	switch channel {
 	case "beeline":
-		re := regexp.MustCompile(`\+\d+`)
-		phones := strings.Join(re.FindAllString(recipients, 5), ",")
-		l := len(message)
-		if l > 480 {
-			l = 480
-		}
-		msg := message[:l]
-		if phones != "" && msg != "" {
-			if err := sendMessageBeeline(phones, msg); err == nil {
-				resp.Error = 0
-				resp.ErrorMsg = "Message `" + msg + "` sent via " + channel + " to " + phones
-				if err := ret.Encode(resp); err != nil {
-					log.Error(err.Error())
-				}
+		if recipients != "" && message != "" {
+			if err := channels.SendMessageBeeline(viper.GetString("beeline.login"),
+							viper.GetString("beeline.password"),
+							viper.GetString("beeline.sender"),
+							recipients, message); err == nil {
+				reportSuccess(w, msg, channel, recipients)
 			} else {
-				resp.Error = 1
-				resp.ErrorMsg = err.Error()
-				if err := ret.Encode(resp); err != nil {
-					log.Error(err.Error())
-				}
+				reportError(w, err)
 			}
 		} else {
-			resp.Error = 1
-			resp.ErrorMsg = "Failed to send message via " + channel
-			if err := ret.Encode(resp); err != nil {
-				log.Error(err.Error())
-			}
+			reportErrorString(w, "Failed to send message via " + channel)
 		}
 	case "smsc":
-		re := regexp.MustCompile(`\+\d+`)
-		phones := strings.Join(re.FindAllString(recipients, 5), ",")
-		l := len(message)
-		if l > 800 {
-			l = 800
-		}
-		msg := message[:l]
-		if phones != "" && msg != "" {
-			if err := sendMessageSmsc(phones, msg); err == nil {
-				resp.Error = 0
-				resp.ErrorMsg = "Message `" + msg + "` sent via " + channel + " to " + phones
-				if err := ret.Encode(resp); err != nil {
-					log.Error(err.Error())
-				}
+		if recipients != "" && msg != "" {
+			if err := channels.SendMessageSmsc(viper.GetString("beeline.login"),
+								viper.GetString("beeline.password"),
+								viper.GetString("beeline.sender"),
+								recipients, msg); err == nil {
+				reportSuccess(w, msg, channel, recipients)
 			} else {
-				resp.Error = 1
-				resp.ErrorMsg = err.Error()
-				if err := ret.Encode(resp); err != nil {
-					log.Error(err.Error())
-				}
+				reportError(w, err)
 			}
 		} else {
-			resp.Error = 1
-			resp.ErrorMsg = "Failed to send message via " + channel
-			if err := ret.Encode(resp); err != nil {
-				log.Error(err.Error())
+			reportErrorString(w, "Failed to send message via " + channel)
+		}
+	case "telegram":
+		if recipients != "" && msg != "" {
+			if err := SendMessageTelegram(viper.GetInt64("telegtam." + recipients + "_chatID"), msg); err == nil {
+				reportSuccess(w, msg, channel, recipients)
+			} else {
+				reportError(w, err)
 			}
+		} else {
+			reportErrorString(w, "Failed to send message via " + channel)
 		}
 	case "email":
 		senderName := r.FormValue("sender_name")
 		senderAddr := r.FormValue("sender_address")
 		subject := r.FormValue("subject")
 
-		re := regexp.MustCompile(`\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3}`)
-		emails := re.FindAllString(recipients, 5)
-		senderAddress := re.FindAllString(senderAddr, 1)
-		l := len(message)
-		if l > 480 {
-			l = 480
-		}
-		msg := message[:l]
-		if emails != nil && msg != "" {
-			if err := sendMessageEmail(senderName, senderAddress[0], emails, subject, msg); err == nil {
-				resp.Error = 0
-				resp.ErrorMsg = "Message" + msg + "sent via" + channel + "to" + fmt.Sprintf("%q", emails)
-				if err := ret.Encode(resp); err != nil {
-					log.Error(err.Error())
-				}
+		if recipients != "" && msg != "" {
+			if err := channels.SendMessageEmail(senderName, senderAddr, recipients, subject, msg); err == nil {
+				reportSuccess(w, msg, channel, recipients)
 			} else {
-				resp.Error = 1
-				resp.ErrorMsg = err.Error()
-				if err := ret.Encode(resp); err != nil {
-					log.Error(err.Error())
-				}
+				reportError(w, err)
 			}
 		} else {
-			resp.Error = 1
-			resp.ErrorMsg = "Failed to send message via" + channel
-			if err := ret.Encode(resp); err != nil {
-				log.Error(err.Error())
-			}
+			reportErrorString(w, "Failed to send message via " + channel)
 		}
 	default:
-		resp.Error = 1
-		resp.ErrorMsg = "No valid channel found"
-		if err := ret.Encode(resp); err != nil {
-			log.Error(err.Error())
-		}
+		reportErrorString(w, "No valid channel found")
 	}
 }
+
+//////////////////////////////////////////////////////////////////////////////
+
+func reportError(w http.ResponseWriter, e error) {
+	ret := json.NewEncoder(w)
+	var resp JResponse
+	resp.Error = 1
+	resp.ErrorMsg = e.Error()
+	if err := ret.Encode(resp); err != nil {
+		log.Error(err.Error())
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////
+
+func reportErrorString(w http.ResponseWriter, e string) {
+	ret := json.NewEncoder(w)
+	var resp JResponse
+	resp.Error = 1
+	resp.ErrorMsg = e
+	if err := ret.Encode(resp); err != nil {
+		log.Error(err.Error())
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////
+
+func reportSuccess(w http.ResponseWriter, msg, channel, recipients string) {
+	ret := json.NewEncoder(w)
+	var resp JResponse
+	resp.Error = 0
+	resp.ErrorMsg = "Message `" + msg + "` sent via " + channel + " to " + recipients
+	if err := ret.Encode(resp); err != nil {
+		log.Error(err.Error())
+	}
+}
+

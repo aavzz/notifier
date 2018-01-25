@@ -33,25 +33,20 @@ func beelineCommand(cmd *cobra.Command, args []string) {
 		log.Fatal(err.Error())
 	}
 
-	parameters := url.Values{
+	params := url.Values{
 		"channel":    {"beeline"},
 		"recipients": {viper.GetString("beeline.recipients")},
 		"message":    {message},
 	}
 
 	url := viper.GetString("beeline.url")
-	req, err := http.NewRequest("POST", url, strings.NewReader(parameters.Encode()))
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
 	c := &http.Client{Transport: tr}
 
-	resp, err := c.Do(req)
+	resp, err := c.PostForm(url, params)
 	if err != nil {
 		log.Fatal(err.Error())
 	}

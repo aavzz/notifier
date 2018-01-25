@@ -13,14 +13,14 @@ import (
 	"strings"
 )
 
-var email = &cobra.Command{
-	Use:   "email",
-	Short: "Sends an email",
-	Long:  `Instructs notifyd to send message via local mailserver`,
-	Run:   emailCommand,
+var telegram = &cobra.Command{
+	Use:   "gelegram",
+	Short: "Sends a message to telegram group",
+	Long:  `Instructs notifyd to send message to telegram group`,
+	Run:   telegramCommand,
 }
 
-func emailCommand(cmd *cobra.Command, args []string) {
+func telegramCommand(cmd *cobra.Command, args []string) {
 
 	type JResp struct {
 		Error    int
@@ -28,21 +28,18 @@ func emailCommand(cmd *cobra.Command, args []string) {
 	}
 
 	//read message from stdin (pipe)
-	message, err := pipe.Read(1024)
+	message, err := pipe.Read(800)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	parameters := url.Values{
-		"channel":        {"email"},
-		"recipients":     {viper.GetString("email.recipients")},
-		"sender_name":    {viper.GetString("email.sender-name")},
-		"sender_address": {viper.GetString("email.sender-address")},
-		"subject":        {viper.GetString("email.subject")},
-		"message":        {message},
+	params := url.Values{
+		"channel":    {"telegram"},
+		"recipients": {viper.GetString("telegram.group")},
+		"message":    {message},
 	}
 
-	url := viper.GetString("email.url")
+	url := viper.GetString("telegram.url")
 
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},

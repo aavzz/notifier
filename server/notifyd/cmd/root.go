@@ -9,6 +9,7 @@ import (
 	"github.com/aavzz/daemon/pid"
 	"github.com/aavzz/daemon/signal"
 	"github.com/aavzz/notifier/server/notifyd/rest"
+	"github.com/aavzz/notifier/server/notifyd/channels"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"os"
@@ -52,6 +53,7 @@ func notifydCommand(cmd *cobra.Command, args []string) {
 			os.Exit(0)
 		})
 	}
+	channels.InitTelegram()
 	rest.InitHttp()
 }
 
