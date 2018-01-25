@@ -15,7 +15,7 @@ func SendMessageEmail(senderName, senderAddress, recipients, subject, message st
         if l > 1000 {
                 l = 1000
         }
-        msg := message[:l]
+        message = message[:l]
 
 	m := gomail.NewMessage()
 	m.SetHeaders(map[string][]string{
