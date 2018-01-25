@@ -10,7 +10,6 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"strings"
 )
 
 var email = &cobra.Command{
@@ -33,7 +32,7 @@ func emailCommand(cmd *cobra.Command, args []string) {
 		log.Fatal(err.Error())
 	}
 
-	parameters := url.Values{
+	params := url.Values{
 		"channel":        {"email"},
 		"recipients":     {viper.GetString("email.recipients")},
 		"sender_name":    {viper.GetString("email.sender-name")},
