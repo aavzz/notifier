@@ -19,7 +19,7 @@ func InitTelegram() {
 		log.Error(err.Error())
 	} else {
 		log.Info("Telegram bot authorized on account " + bot.Self.UserName)
-		go respond()
+		//go respond()
 	}
 }
 
