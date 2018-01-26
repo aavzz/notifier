@@ -53,12 +53,12 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			reportErrorString(w, "Failed to send message via "+channel)
 		}
 	case "websms":
-		if recipients != "" && msg != "" {
+		if recipients != "" && message != "" {
 			if err := channels.SendMessageWebsms(viper.GetString("websms.login"),
 				viper.GetString("websms.password"),
 				viper.GetString("websms.sender"),
 				recipients, msg); err == nil {
-				reportSuccess(w, msg, channel, recipients)
+				reportSuccess(w, message, channel, recipients)
 			} else {
 				reportError(w, err)
 			}
