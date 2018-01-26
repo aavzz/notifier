@@ -4,6 +4,7 @@ import (
 	"github.com/spf13/viper"
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/aavzz/daemon/log"
+	"fmt"
 	"net/http"
 	"crypto/tls"
 )
@@ -29,6 +30,7 @@ func InitTelegram() {
 func SendMessageTelegram(chatID int64, message string) error {
 
 	if bot != nil {
+		log.Info(fmt.Sprintf("sending %s to %d", message, chatID))
 		_, err := bot.Send(tgbotapi.NewMessage(chatID, message))
 		if err != nil {
 			return err
