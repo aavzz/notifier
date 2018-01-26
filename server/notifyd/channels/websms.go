@@ -51,7 +51,7 @@ func SendMessageWebsms(login, pass, sender, recipients, msg string) error {
 			if err != nil {
 				return err
 			}
-			var v websmsResponse
+			var v WebsmsResponse
 			err = json.Unmarshal(body, &v)
 			if err != nil {
 				return err
