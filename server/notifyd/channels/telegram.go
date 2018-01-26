@@ -15,7 +15,7 @@ var bot *tgbotapi.BotAPI
 func InitTelegram() {
 	var err error
 	c := &http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}}
-	bot, err := tgbotapi.NewBotAPIWithClient(viper.GetString("telegram.token"), c)
+	bot, err = tgbotapi.NewBotAPIWithClient(viper.GetString("telegram.token"), c)
 	if err != nil {
 		log.Error(err.Error())
 	} else {
