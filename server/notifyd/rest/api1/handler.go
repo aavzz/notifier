@@ -7,8 +7,8 @@ import (
 	"encoding/json"
 	"github.com/aavzz/daemon/log"
 	"github.com/aavzz/notifier/server/notifyd/channels"
-	"net/http"
 	"github.com/spf13/viper"
+	"net/http"
 )
 
 // JResponse holds notifyd response
@@ -29,38 +29,51 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	case "beeline":
 		if recipients != "" && message != "" {
 			if err := channels.SendMessageBeeline(viper.GetString("beeline.login"),
-							viper.GetString("beeline.password"),
-							viper.GetString("beeline.sender"),
-							recipients, message); err == nil {
+				viper.GetString("beeline.password"),
+				viper.GetString("beeline.sender"),
+				recipients, message); err == nil {
 				reportSuccess(w, message, channel, recipients)
 			} else {
 				reportError(w, err)
 			}
 		} else {
-			reportErrorString(w, "Failed to send message via " + channel)
+			reportErrorString(w, "Failed to send message via "+channel)
 		}
 	case "smsc":
 		if recipients != "" && message != "" {
 			if err := channels.SendMessageSmsc(viper.GetString("smsc.login"),
-								viper.GetString("smsc.password"),
-								viper.GetString("smsc.sender"),
-								recipients, message); err == nil {
+				viper.GetString("smsc.password"),
+				viper.GetString("smsc.sender"),
+				recipients, message); err == nil {
 				reportSuccess(w, message, channel, recipients)
 			} else {
 				reportError(w, err)
 			}
 		} else {
-			reportErrorString(w, "Failed to send message via " + channel)
+			reportErrorString(w, "Failed to send message via "+channel)
+		}
+	case "websms":
+		if recipients != "" && msg != "" {
+			if err := channels.SendMessageWebsms(viper.GetString("websms.login"),
+				viper.GetString("websms.password"),
+				viper.GetString("websms.sender"),
+				recipients, msg); err == nil {
+				reportSuccess(w, msg, channel, recipients)
+			} else {
+				reportError(w, err)
+			}
+		} else {
+			reportErrorString(w, "Failed to send message via "+channel)
 		}
 	case "telegram":
 		if recipients != "" && message != "" {
-			if err := channels.SendMessageTelegram(viper.GetInt64("telegram." + recipients + "_chatid"), message); err == nil {
+			if err := channels.SendMessageTelegram(viper.GetInt64("telegram."+recipients+"_chatid"), message); err == nil {
 				reportSuccess(w, message, channel, recipients)
 			} else {
 				reportError(w, err)
 			}
 		} else {
-			reportErrorString(w, "Failed to send message via " + channel)
+			reportErrorString(w, "Failed to send message via "+channel)
 		}
 	case "email":
 		senderName := r.FormValue("sender_name")
@@ -74,7 +87,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 				reportError(w, err)
 			}
 		} else {
-			reportErrorString(w, "Failed to send message via " + channel)
+			reportErrorString(w, "Failed to send message via "+channel)
 		}
 	default:
 		reportErrorString(w, "No valid channel found")
@@ -116,4 +129,3 @@ func reportSuccess(w http.ResponseWriter, msg, channel, recipients string) {
 		log.Error(err.Error())
 	}
 }
-

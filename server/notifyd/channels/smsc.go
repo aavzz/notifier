@@ -5,12 +5,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"golang.org/x/text/encoding/charmap"
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"golang.org/x/text/encoding/charmap"
-        "strings"
 	"regexp"
+	"strings"
 )
 
 // SmscResponse holds the response from smsc
@@ -22,17 +22,17 @@ type SmscResponse struct {
 // SendMessageSmsc sends message via smsc
 func SendMessageSmsc(login, pass, sender, recipients, msg string) error {
 
-        msg, err := charmap.Windows1251.NewEncoder().String(msg)
-        if err != nil {
-                return err
-        } else {
-                recipients := strings.Join(regexp.MustCompile(`\+\d+`).FindAllString(recipients, -1), ",")
+	msg, err := charmap.Windows1251.NewEncoder().String(msg)
+	if err != nil {
+		return err
+	} else {
+		recipients := strings.Join(regexp.MustCompile(`\+\d+`).FindAllString(recipients, -1), ",")
 
-                l := len(msg)
-                if l > 800 {
-                        l = 800
-                }
-                msg := msg[:l]
+		l := len(msg)
+		if l > 800 {
+			l = 800
+		}
+		msg := msg[:l]
 
 		params := url.Values{
 			"login":  {login},

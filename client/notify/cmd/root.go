@@ -32,6 +32,11 @@ func Execute() {
 	viper.BindPFlag("smsc.recipients", smsc.Flags().Lookup("recipients"))
 	viper.BindPFlag("smsc.url", smsc.Flags().Lookup("url"))
 
+	websms.Flags().StringP("recipients", "r", "", "recipient list")
+	websms.Flags().StringP("url", "u", "", "notifyd url to query")
+	viper.BindPFlag("websms.recipients", websms.Flags().Lookup("recipients"))
+	viper.BindPFlag("websms.url", websms.Flags().Lookup("url"))
+
 	telegram.Flags().StringP("group", "r", "", "telegram group name")
 	telegram.Flags().StringP("url", "u", "", "notifyd url to query")
 	viper.BindPFlag("telegram.group", telegram.Flags().Lookup("group"))
@@ -50,6 +55,7 @@ func Execute() {
 
 	notify.AddCommand(beeline)
 	notify.AddCommand(smsc)
+	notify.AddCommand(websms)
 	notify.AddCommand(telegram)
 	notify.AddCommand(email)
 

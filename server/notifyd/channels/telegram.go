@@ -1,13 +1,13 @@
 package channels
 
 import (
-	"github.com/spf13/viper"
-	"github.com/go-telegram-bot-api/telegram-bot-api"
-	"github.com/aavzz/daemon/log"
-	"fmt"
-	"net/http"
 	"crypto/tls"
 	"errors"
+	"fmt"
+	"github.com/aavzz/daemon/log"
+	"github.com/go-telegram-bot-api/telegram-bot-api"
+	"github.com/spf13/viper"
+	"net/http"
 )
 
 var bot *tgbotapi.BotAPI

@@ -2,7 +2,7 @@ package channels
 
 import (
 	"crypto/tls"
-	"encoding/xml"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"golang.org/x/text/encoding/charmap"
@@ -13,14 +13,14 @@ import (
 	"strings"
 )
 
-// BeelineResponse holds the response from beeline
+// WebsmsResponse holds the response from smsc
 // Must be exportable
-type BeelineResponse struct {
-	Errors []string `xml:"errors>error"`
+type WebsmsResponse struct {
+	Error string
 }
 
-// SendMessageBeeline sends message via beeline
-func SendMessageBeeline(login, pass, sender, recipients, msg string) error {
+// SendMessageWebsms sends message via websms
+func SendMessageWebsms(login, pass, sender, recipients, msg string) error {
 
 	msg, err := charmap.Windows1251.NewEncoder().String(msg)
 	if err != nil {
@@ -29,41 +29,36 @@ func SendMessageBeeline(login, pass, sender, recipients, msg string) error {
 		recipients := strings.Join(regexp.MustCompile(`\+\d+`).FindAllString(recipients, -1), ",")
 
 		l := len(msg)
-		if l > 480 {
-			l = 480
+		if l > 800 {
+			l = 800
 		}
 		msg := msg[:l]
 
 		params := url.Values{
-			"user":    {login},
-			"pass":    {pass},
-			"sender":  {sender},
-			"action":  {"post_sms"},
-			"target":  {recipients},
-			"message": {msg},
+			"json": {"{\"http_username\": \"" + login + "\", \"http_password\": \"" + pass + "\", \"message\": \"" + msg + "\", \"phone_list\": \"" + recipients + "\", \"fromPhone\": \"" + sender + "\"}"},
 		}
 
 		c := &http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}}
-		resp, err := c.PostForm("https://beeline.amega-inform.ru/sendsms/", params)
+		resp, err := c.PostForm("https://cab.websms.ru/json_in5.asp", params)
 		if err != nil {
 			return err
 		}
 		if resp != nil {
 			defer resp.Body.Close()
 		}
-
 		if resp.StatusCode == 200 {
 			body, err := ioutil.ReadAll(resp.Body)
 			if err != nil {
 				return err
 			}
-			var v BeelineResponse
-			err = xml.Unmarshal(body, &v)
+			var v websmsResponse
+			err = json.Unmarshal(body, &v)
 			if err != nil {
 				return err
 			}
-			if v.Errors != nil {
-				return errors.New(fmt.Sprintf("Provider output: %q", v.Errors))
+
+			if v.Error != "OK" {
+				return errors.New(fmt.Sprintf("Provider output: %q", v.Error))
 			}
 		} else {
 			return errors.New(fmt.Sprintf("Provider output: %s", resp.Status))
