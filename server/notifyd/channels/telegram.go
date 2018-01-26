@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"crypto/tls"
+	"errors"
 )
 
 var bot *tgbotapi.BotAPI
@@ -20,7 +21,6 @@ func InitTelegram() {
 		log.Error(err.Error())
 	} else {
 		log.Info("Telegram bot authorized on account " + bot.Self.UserName)
-		//go respond()
 	}
 }
 
@@ -36,25 +36,5 @@ func SendMessageTelegram(chatID int64, message string) error {
 			return err
 		}
 	}
-	return nil
-}
-
-///////////////////////////////////////////////////////////////
-
-func respond() {
-	u := tgbotapi.NewUpdate(0)
-	u.Timeout = 60
-	updates, err := bot.GetUpdatesChan(u)
-	if err != nil {
-		log.Error(err.Error())
-	}
-
-	for {
-		for update := range updates {
-			if update.Message == nil {
-				continue
-			}
-			SendMessageTelegram(update.Message.Chat.ID, "Тишина в библиотеке!!!")
-		}
-	}
+	return errors.New("Bot is not connected")
 }
