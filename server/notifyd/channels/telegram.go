@@ -30,11 +30,11 @@ func InitTelegram() {
 func SendMessageTelegram(chatID int64, message string) error {
 
 	if bot != nil {
-		log.Info(fmt.Sprintf("sending %s to %d", message, chatID))
 		_, err := bot.Send(tgbotapi.NewMessage(chatID, message))
 		if err != nil {
 			return err
 		}
+		return nil
 	}
 	return errors.New("Bot is not connected")
 }
