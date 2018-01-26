@@ -57,7 +57,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			if err := channels.SendMessageWebsms(viper.GetString("websms.login"),
 				viper.GetString("websms.password"),
 				viper.GetString("websms.sender"),
-				recipients, msg); err == nil {
+				recipients, message); err == nil {
 				reportSuccess(w, message, channel, recipients)
 			} else {
 				reportError(w, err)
