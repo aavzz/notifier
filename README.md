@@ -132,6 +132,65 @@ This will launch **postfix** on 127.0.0.1, just what we need, because we only wa
 
 ### telegram bot setup
 
+#### get the token
+Contact **BotFather** on telegram, the rest will look like this:
+```
+What can this bot do?
+BotFather is the one bot to rule them all. Use it to create new bot accounts and manage your existing bots.
+
+About Telegram bots:
+https://core.telegram.org/bots
+Bot API manual:
+https://core.telegram.org/bots/api
+
+Contact @BotSupport if you have questions about the Bot API.
+
+
+**Alex**
+/start
+
+
+**BotFather**
+I can help you create and manage Telegram bots. If you're new to the Bot API, please see the manual.
+
+You can control me by sending these commands:
+
+/newbot - create a new bot
+...
+
+
+**Alex**
+/newbot
+
+
+**BotFather**
+Alright, a new bot. How are we going to call it? Please choose a name for your bot.
+Alex
+TelixNotifier
+BotFather
+Good. Now let's choose a username for your bot. It must end in `bot`. Like this, for example: TetrisBot or tetris_bot.
+Alex
+telix_notifier_bot
+BotFather
+Done! Congratulations on your new bot. You will find it at t.me/telix_notifier_bot. You can now add a description, about section and profile picture for your bot, see /help for a list of commands. By the way, when you've finished creating your cool bot, ping our Bot Support if you want a better username for it. Just make sure the bot is fully operational before you do this.
+
+Use this token to access the HTTP API:
+<--YOUR_TOKEN_HERE-->
+
+For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+```
+Store the token somewhere, you'll need to put it in the **notifyd** configuration file later.
+#### place your new bot into some group
+Create a **telegram group** and add your bot into it. It's ok if your bot "has no access to messages". Now we need the **ChatID** of the group you just added your bot to. Write something to your shiny-new bot (never mind that **notifyd** is not up yet):
+```
+/test@your_bot_user_name
+````
+and then go to the following URL:
+```
+https://api.telegram.org/bot<--YOUR_TOKEN_HERE-->/getUpdates
+```
+You'll get a JSON. Look up the `"chat":{"id":` part and store the following (negative) number somewhere, we'll need it for the **notifyd** config.
+
 ### notifyd setup
 
 ## Invocation
