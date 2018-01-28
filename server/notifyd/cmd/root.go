@@ -62,7 +62,7 @@ func Execute() {
 	notifyd.Flags().StringP("config", "c", "/etc/notifyd.conf", "configuration file")
 	notifyd.Flags().StringP("pidfile", "p", "/var/run/notifyd.pid", "process ID file")
 	notifyd.Flags().StringP("address", "a", "127.0.0.1:8084", "address and port to bind to")
-	notifyd.Flags().BoolP("daemonize", "d", false, "run as a daemon (default: no)")
+	notifyd.Flags().BoolP("daemonize", "d", false, "run as a daemon (default false)")
 	viper.BindPFlag("config", notifyd.Flags().Lookup("config"))
 	viper.BindPFlag("pidfile", notifyd.Flags().Lookup("pidfile"))
 	viper.BindPFlag("address", notifyd.Flags().Lookup("address"))
