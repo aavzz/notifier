@@ -288,5 +288,5 @@ Response (JSON):
 
 | Parameter | Description |
 | --------- | ----------- |
-| Error     | Error code (integer) |
+| Error     | Error code (integer), `0` means no error |
 | ErrorMsg  | Error explanation message (string) |
