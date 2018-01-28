@@ -199,8 +199,8 @@ You'll get a JSON. Look up the `"chat":{"id":` part and store the following (neg
 login = "foo"
 #Your beeline password
 password = "bar"
-#The addressee will see this string as the name of the message sender
-#The name is usually pre-configured on the operator's side
+#The addressee will see this string as the name of the message sender.
+#The name is usually pre-configured on the operator's side.
 sender = "baz"
 
 [websms]
@@ -216,7 +216,7 @@ sender = "baz"
 [telegram]
 token = "<--YOUR_TOKEN_HERE-->"
 #You can use almost whatever you like instead of `test` to name the group locally.
-#The `_chaiid` suffix is mandatapy
+#The `_chaiid` suffix is mandatory.
 test_chatid = <---->
 ```
 Pretty self-explanatory.
