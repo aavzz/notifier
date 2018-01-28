@@ -18,7 +18,7 @@
 
 **notifyd** is written in Go, so you need to have some basic knowledge how to build Go programs. It shold build cleanly accorging to standard Go procedures, once you install all the needed Go dependencies, there are not many of them.
 
-**notifyd** is a web-application, hence it can be run on its own in *http* mode. But I'd recommend using it in *https* mode. For that we need a proxy (e.g **nginx**). Maybe sometimes I'll add *https* and other usefull stuff to **notifys**, but right now we rely on proxy. A local mail server (e.g. **postfix**) is used to send out emails. We also need to get in touch with the **botfatehr** to register telegram bot.
+**notifyd** is a web-application, hence it can be run on its own in *http* mode. But I'd recommend using it in *https* mode. For that we need a proxy (e.g **nginx**). Maybe sometimes I'll add *https* and other usefull stuff to **notifys**, but right now we rely on proxy. A local mail server (e.g. **postfix**) is used to send out emails. We also need to get in touch with the **botfather** to register telegram bot.
 
 ### nginx setup
 
