@@ -192,6 +192,34 @@ https://api.telegram.org/bot<--YOUR_TOKEN_HERE-->/getUpdates
 You'll get a JSON. Look up the `"chat":{"id":` part and store the following (negative) number somewhere, we'll need it for the **notifyd** config.
 
 ### notifyd setup
+**notifyd** uses */etc/notifyd.conf* as default configuration file. The configuration file is in the TOML format:
+```
+[beeline]
+#Your beeline login
+login = "foo"
+#Your beeline password
+password = "bar"
+#The addressee will see this string as the name of the message sender
+#The name is usually pre-configured on the operator's side
+sender = "baz"
+
+[websms]
+login = "foo"
+password = "bar"
+sender = "baz"
+
+[smsc]
+login = "foo"
+password = "bar"
+sender = "baz"
+
+[telegram]
+token = "<--YOUR_TOKEN_HERE-->"
+#You can use almost whatever you like instead of `test` to name the group locally.
+#The `_chaiid` suffix is mandatapy
+test_chatid = <---->
+```
+Pretty self-explanatory.
 
 ## Invocation
 
