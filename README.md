@@ -219,7 +219,7 @@ token = "<--YOUR_TOKEN_HERE-->"
 #The `_chaiid` suffix is mandatory.
 test_chatid = <---->
 ```
-Pretty self-explanatory.
+Pretty self-explanatory. **email** has no configuration file sections.
 
 ## Invocation
 
