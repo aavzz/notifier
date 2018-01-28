@@ -268,4 +268,22 @@ Flags:
 ```
 
 ## API
+Requests are expected to be POSTed to a specific API URL (**/api1** currently). Responses are sent as JSON. The folowing parameters are recognized:
+
+### api1
+Request:
+| Parameter      | Description |
+|----------------|-------------|
+| channel        | Channel name. Currently one of `beeline`, `smsc`, `websms`, `email`, `telegram`. |
+| message        | URL-encoded message text. |
+| recipients     | Comma delimited list of phones in international format, email addresses or single telegram group name |
+| sender_name    | Email sender name |
+| sender_address | Email sender address |
+| subject        | Email subject |
+
+Response (JSON):
+| Parameter | Description |
+|-----------|-------------|
+| Error     | Error code (integer) |
+| ErrorMsg  | Error explanation message (string) |
 
