@@ -128,7 +128,7 @@ smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_authenticated, rej
 strict_rfc821_envelopes = yes
 ```
 
-This will launch **postfix** on 127.0.0.1, just what we need, because we do only want so send out.
+This will launch **postfix** on 127.0.0.1, just what we need, because we only want so send out.
 
 ### telegram bot setup
 
