@@ -283,11 +283,9 @@ Request:
 | subject        | Email subject |
 
 
-
 Response (JSON):
 
 | Parameter | Description |
 | --------- | ----------- |
 | Error     | Error code (integer) |
 | ErrorMsg  | Error explanation message (string) |
-
