@@ -1,1 +1,10 @@
-Customized notification service (very specific, you most probably don't need this).
+# notifier
+
+## What it is
+
+## Example setup
+
+## Invocation
+
+## API
+
