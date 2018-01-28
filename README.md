@@ -238,8 +238,34 @@ Flags:
 
 ```
 
-
 ### notify
+**notify** is a command-line utility to send messages via **notifyd**. It wats the message to be piped and is invoked as follows:
+```
+Usage:
+  echo "MESSAGE" | notify [beeline|smsc|websms] [flags]
+
+Flags:
+  -r, --recipients string   comma-delimited recipient list
+  -u, --url string          notifyd url to query
+
+Usage:
+  echo "MESSAGE" | notify email [flags]
+
+Flags:
+  -r, --recipients string       comma-delimited recipient list
+  -a, --sender-address string   sender address
+  -n, --sender-name string      sender name
+  -s, --subject string          email subject
+  -u, --url string              notifyd url to query
+
+Usage:
+  notify telegram [flags]
+
+Flags:
+  -r, --group string   telegram group name in the configuration file
+  -u, --url string     notifyd url to query
+
+```
 
 ## API
 
