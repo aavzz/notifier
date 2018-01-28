@@ -59,9 +59,9 @@ func notifydCommand(cmd *cobra.Command, args []string) {
 
 // Execute starts notifyd execution
 func Execute() {
-	notifyd.Flags().StringP("config", "c", "/etc/notifyd.conf", "configuration file (default: /etc/notifyd.conf)")
-	notifyd.Flags().StringP("pidfile", "p", "/var/run/notifyd.pid", "PID file (default: /var/run/notifyd.pid)")
-	notifyd.Flags().StringP("address", "a", "127.0.0.1:8084", "address and port to bind to (default: 127.0.0.1:8084)")
+	notifyd.Flags().StringP("config", "c", "/etc/notifyd.conf", "configuration file")
+	notifyd.Flags().StringP("pidfile", "p", "/var/run/notifyd.pid", "process ID file")
+	notifyd.Flags().StringP("address", "a", "127.0.0.1:8084", "address and port to bind to")
 	notifyd.Flags().BoolP("daemonize", "d", false, "run as a daemon (default: no)")
 	viper.BindPFlag("config", notifyd.Flags().Lookup("config"))
 	viper.BindPFlag("pidfile", notifyd.Flags().Lookup("pidfile"))
