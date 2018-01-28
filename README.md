@@ -272,6 +272,7 @@ Requests are expected to be POSTed to a specific API URL (**/api1** currently). 
 
 ### api1
 Request:
+
 | Parameter      | Description |
 | -------------- | ----------- |
 | channel        | Channel name. Currently one of `beeline`, `smsc`, `websms`, `email`, `telegram`. |
@@ -281,7 +282,9 @@ Request:
 | sender_address | Email sender address |
 | subject        | Email subject |
 
+
 Response (JSON):
+
 | Parameter | Description |
 | --------- | ----------- |
 | Error     | Error code (integer) |
