@@ -20,7 +20,54 @@
 
 **notifyd** is a web-application, hence it can be run on its own in *http* mode. But I'd recommend using it in *https* mode. For that we need a proxy (e.g **nginx**). Maybe sometimes I'll add *https* and other usefull stuff to **notifyd**, but right now we rely on proxy. A local mail server (e.g. **postfix**) is used to send out emails. We also need to get in touch with the **botfather** to register telegram bot.
 
+I assume you know what an ssl sertificate is and how to handle it.
+
 ### nginx setup
+
+We'll try to keep things as simple as possible. So here's the **nginx** configuration file *nginx.conf*:
+```
+events {
+    worker_connections  1024;
+}
+
+error_log syslog:server=unix:/var/run/log;
+
+http {
+
+    map $ssl_client_s_dn $ssl_client_s_dn_cn {
+        default "should_not_happen";
+        ~/CN=(?<CN>[^/]+) $CN;
+    }
+
+    server {
+        listen <--YOUR_IP_HERE-->:80;
+        server_name <--SERVER_NAME_HERE-->;
+        return 301 https://<--SERVER_NAME_HERE-->$request_uri;
+    }
+
+    server {
+
+        access_log syslog:server=unix:/var/run/log;
+        listen <--YOUR_IP_HERE-->:443 ssl;
+        ssl_certificate     /etc/nginx/<--CERTIFICATE_FILE-->;
+        ssl_certificate_key /etc/nginx/<--KEY_FILE-->;
+        ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers         HIGH:!aNULL:!MD5;
+
+        server_name         <--SERVER_NAME_HERE-->;
+
+        location / {
+            proxy_pass http://localhost:8084/;
+            proxy_set_header   X-Real-IP $remote_addr;
+            proxy_set_header   Host $http_host;
+            proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+}
+```
+**nginx** speaks https to the outside world an communicates woth **notifyd** via http on a special port.
+It also sets the **X-Forwarded-For** header, just so **notifyd** knows the real address of the calling client.
+
 
 ### postfix setup
 
