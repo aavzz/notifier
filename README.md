@@ -259,7 +259,7 @@ Flags:
   -u, --url string              notifyd url to query
 
 Usage:
-  notify telegram [flags]
+  echo "MESSAGE" | notify telegram [flags]
 
 Flags:
   -r, --group string   telegram group name in the configuration file
