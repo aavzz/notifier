@@ -2,7 +2,7 @@
 
 ## What it is
 
-**notifier** is a general purpose notification service to inform you via SMS or telegram. It can be used by other services directly via REST API or indirectly via provided client. Currently support for only a few russian SMS services is available out of the box, but adding your own channel is trivial. Or you can drop me a line as well, and we'll see if support for your favorite SMS service can be added.  
+**notifier** is a general purpose notification service to inform you via SMS, email, or telegram. It can be used by other services directly via REST API or indirectly via provided client. Currently support for only a few russian SMS services is available out of the box, but adding your own channel is trivial. Or you can drop me a line as well, and we'll see if support for your favorite SMS service can be added.  
 
 ## Features
 
@@ -16,9 +16,17 @@
 
 ### What we need
 
-### **nginx** setup
+### nginx setup
+
+### postfix setup
+
+### notifyd setup
 
 ## Invocation
+
+### notifyd
+
+### notify
 
 ## API
 
