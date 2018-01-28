@@ -71,6 +71,65 @@ It also sets the **X-Forwarded-For** header, just so **notifyd** knows the real 
 
 ### postfix setup
 
+For **postfix** this minimal *main.cf* will do:
+```
+#
+# LOCAL PATHNAME INFORMATION
+#
+
+sendmail_path = /usr/sbin/sendmail
+newaliases_path = /usr/bin/newaliases
+mailq_path = /usr/bin/mailq
+
+html_directory = no
+manpage_directory = /usr/share/man
+readme_directory = no
+queue_directory = /var/spool/postfix
+command_directory = /usr/sbin
+daemon_directory = /usr/libexec/postfix
+data_directory = /var/run/postfix
+
+#
+# QUEUE AND PROCESS OWNERSHIP
+#
+
+mail_owner = postfix
+setgid_group = postdrop
+
+#
+# NETWORK DETAILS
+#
+
+inet_protocols = ipv4
+inet_interfaces = localhost
+
+#
+# LOCAL DELIVERY
+#
+
+# real users
+
+home_mailbox = Maildir/
+unknown_local_recipient_reject_code = 550
+alias_maps = hash:/etc/postfix/aliases
+
+# virtual users
+
+virtual_mailbox_base=/
+virtual_uid_maps=static:1002
+virtual_gid_maps=static:1002
+
+#
+# TRUST AND RELAY CONTROL
+#
+
+#mynetworks = 168.100.189.0/28, 127.0.0.0/8
+smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination
+strict_rfc821_envelopes = yes
+```
+
+This will launch **postfix** on 127.0.0.1, just what we need, because we do only want so send out.
+
 ### telegram bot setup
 
 ### notifyd setup
