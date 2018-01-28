@@ -65,7 +65,7 @@ http {
     }
 }
 ```
-**nginx** speaks https to the outside world an communicates woth **notifyd** via http on a special port.
+**nginx** speaks https to the outside world an communicates with **notifyd** via http on a special port.
 It also sets the **X-Forwarded-For** header, just so **notifyd** knows the real address of the calling client.
 
 
