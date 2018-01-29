@@ -277,9 +277,9 @@ Request:
 | channel        | Channel name. Currently one of `beeline`, `smsc`, `websms`, `email`, or `telegram`. |
 | message        | URL-encoded message text. |
 | recipients     | Comma delimited list of phones in international format, email addresses or single telegram group name (as in the configuration file) |
-| sender_name    | Email sender name |
-| sender_address | Email sender address |
-| subject        | Email subject |
+| sender_name    | Email sender name (**email** only) |
+| sender_address | Email sender address (**email** only) |
+| subject        | Email subject (**email** only) |
 
 
 Response (JSON):
