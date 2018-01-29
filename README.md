@@ -231,11 +231,11 @@ Usage:
   notifyd [flags]
 
 Flags:
-  -a, --address string   address and port to bind to (default: 127.0.0.1:8084) (default "127.0.0.1:8084")
-  -c, --config string    configuration file (default: /etc/notifyd.conf) (default "/etc/notifyd.conf")
-  -d, --daemonize        run as a daemon (default: no)
+  -a, --address string   address and port to bind to (default "127.0.0.1:8084")
+  -c, --config string    configuration file (default "/etc/notifyd.conf")
+  -d, --daemonize        run as a daemon (default false)
   -h, --help             help for notifyd
-  -p, --pidfile string   PID file (default: /var/run/notifyd.pid) (default "/var/run/notifyd.pid")
+  -p, --pidfile string   PID file (default "/var/run/notifyd.pid")
 
 ```
 
