@@ -194,6 +194,7 @@ You'll get a JSON. Look up the `"chat":{"id":` part and store the following (neg
 ### notifyd setup
 **notifyd** uses */etc/notifyd.conf* as default configuration file. The configuration file is in the TOML format:
 ```
+# If you don't plan to use beeline, you can safely comment out this section
 [beeline]
 #Your beeline login
 login = "foo"
