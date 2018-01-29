@@ -234,9 +234,7 @@ Flags:
   -a, --address string   address and port to bind to (default "127.0.0.1:8084")
   -c, --config string    configuration file (default "/etc/notifyd.conf")
   -d, --daemonize        run as a daemon (default false)
-  -h, --help             help for notifyd
   -p, --pidfile string   PID file (default "/var/run/notifyd.pid")
-
 ```
 
 ### notify
@@ -265,7 +263,6 @@ Usage:
 Flags:
   -r, --group string   telegram group name in the configuration file
   -u, --url string     notifyd url to query
-
 ```
 Don't send messages with **notify** to http address of the proxy, **notify** does not understand redirection. 
 
