@@ -245,7 +245,7 @@ Usage:
 
 Flags:
   -r, --recipients string   comma-delimited phone list in international format
-  -u, --url string          notifyd url to query
+  -u, --url string          notifyd URL to POST the message to
 
 Usage:
   echo "MESSAGE" | notify email [flags]
@@ -255,14 +255,14 @@ Flags:
   -a, --sender-address string   sender address
   -n, --sender-name string      sender name
   -s, --subject string          email subject
-  -u, --url string              notifyd url to query
+  -u, --url string              notifyd URL to POST the message to
 
 Usage:
   echo "MESSAGE" | notify telegram [flags]
 
 Flags:
   -r, --group string   telegram group name in the configuration file
-  -u, --url string     notifyd url to query
+  -u, --url string     notifyd URL to POST the message to
 ```
 Don't send messages with **notify** to http address of the proxy, **notify** does not understand redirection. 
 
