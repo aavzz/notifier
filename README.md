@@ -238,7 +238,7 @@ Flags:
 ```
 
 ### notify
-**notify** is a command-line utility to send messages via **notifyd**. It wats the message to be piped and is invoked as follows:
+**notify** is a command-line utility to send messages via **notifyd**. It wants the message to be piped and is invoked as follows:
 ```
 Usage:
   echo "MESSAGE" | notify [beeline|smsc|websms] [flags]
