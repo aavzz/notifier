@@ -264,7 +264,7 @@ Flags:
   -r, --group string   telegram group name in the configuration file
   -u, --url string     notifyd URL to POST the message to
 ```
-Don't send messages with **notify** to http address of the proxy, **notify** does not understand redirection. 
+Don't send messages with **notify** to an `http` address of the proxy, **notify** does not understand redirection. 
 
 ## API
 Requests are expected to be POSTed to a specific API URL (**/api1** currently). Responses are sent as JSON. The folowing parameters are recognized:
