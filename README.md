@@ -244,14 +244,14 @@ Usage:
   echo "MESSAGE" | notify [beeline|smsc|websms] [flags]
 
 Flags:
-  -r, --recipients string   comma-delimited recipient list
+  -r, --recipients string   comma-delimited phone list in international format
   -u, --url string          notifyd url to query
 
 Usage:
   echo "MESSAGE" | notify email [flags]
 
 Flags:
-  -r, --recipients string       comma-delimited recipient list
+  -r, --recipients string       comma-delimited email address list
   -a, --sender-address string   sender address
   -n, --sender-name string      sender name
   -s, --subject string          email subject
