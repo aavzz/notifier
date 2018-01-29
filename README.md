@@ -267,7 +267,7 @@ Flags:
 Don't send messages with **notify** to an `http` address of the proxy, **notify** does not understand redirection. 
 
 ## API
-Requests are expected to be POSTed to a specific API URL (**/api1** currently). Responses are sent as JSON. The folowing parameters are recognized:
+Requests are expected to be POSTed to a specific API URL (**/api1** currently). Responses are sent in JSON. The folowing parameters are recognized:
 
 ### api1
 Request:
