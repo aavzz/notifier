@@ -236,6 +236,7 @@ Flags:
   -d, --daemonize        run as a daemon (default false)
   -p, --pidfile string   PID file (default "/var/run/notifyd.pid")
 ```
+On **SIGHUP** **notifyd** re-reads its configuration file.
 
 ### notify
 **notify** is a command-line utility to send messages via **notifyd**. It wants the message to be piped and is invoked as follows:
