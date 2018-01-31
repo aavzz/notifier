@@ -5,7 +5,6 @@ import (
 	"github.com/aavzz/notifier"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"io/ioutil"
 	"log"
 )
 
@@ -24,7 +23,7 @@ func emailCommand(cmd *cobra.Command, args []string) {
 		log.Fatal(err.Error())
 	}
 
-	err := notifier.NotifyEmail(viper.GetString("email.url"), viper.GetString("email.recipients"),
+	err = notifier.NotifyEmail(viper.GetString("email.url"), viper.GetString("email.recipients"),
 		viper.GetString("email.subject"), viper.GetString("email.sender-name"),
 		viper.GetString("email.sender-address"), message)
 	if err != nil {
