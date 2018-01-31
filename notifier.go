@@ -113,7 +113,7 @@ func NotifyTelegram(notifyd, group, message string) error {
 //recipients - comma-separated list of email addresses
 //subject - message subject
 //sender_name - message sender name
-//sender_addr - message sendet email address
+//sender_address - message sendet email address
 //message - message to send
 func NotifyEmail(notifyd, recipients, subject, sender_name, sender_address, message string) error {
 
@@ -122,7 +122,7 @@ func NotifyEmail(notifyd, recipients, subject, sender_name, sender_address, mess
 		"recipients":     {recipients},
 		"subject":        {subject},
 		"sender_name":    {sender_name},
-		"sender_address": {sender_addr},
+		"sender_address": {sender_address},
 		"message":        {message},
 	}
 
