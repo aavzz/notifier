@@ -5,7 +5,6 @@ import (
 	"github.com/aavzz/notifier"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"io/ioutil"
 	"log"
 )
 
@@ -24,7 +23,7 @@ func telegramCommand(cmd *cobra.Command, args []string) {
 		log.Fatal(err.Error())
 	}
 
-	err := notifier.Notifytelegram(viper.GetString("telegram.url"), viper.GetString("telegram.group"), message)
+	err = notifier.Notifytelegram(viper.GetString("telegram.url"), viper.GetString("telegram.group"), message)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
