@@ -4,6 +4,7 @@ Package notifier provides GO API to notifyd
 package notifier
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"net/http"
 	"net/url"
