@@ -1,16 +1,12 @@
 package cmd
 
 import (
-	"crypto/tls"
-	"encoding/json"
 	"github.com/aavzz/misc/pipe"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.con/aavzz/notifier"
 	"io/ioutil"
 	"log"
-	"net/http"
-	"net/url"
 )
 
 var websms = &cobra.Command{
