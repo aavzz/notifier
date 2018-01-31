@@ -3,7 +3,6 @@ package channels
 import (
 	"crypto/tls"
 	"errors"
-	"fmt"
 	"github.com/aavzz/daemon/log"
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/spf13/viper"
