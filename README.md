@@ -267,7 +267,7 @@ Flags:
 ```
 Don't send messages with **notify** to an `http` address of the proxy, **notify** does not understand redirection. 
 
-## API
+## REST API
 Requests are expected to be POSTed to a specific API URL (**/api1** currently). Responses are sent in JSON. The folowing parameters are recognized:
 
 ### api1
@@ -289,3 +289,31 @@ Response (JSON):
 | --------- | ----------- |
 | Error     | Error code (integer), `0` means no error |
 | ErrorMsg  | Error explanation message (string) |
+
+### Go API
+```
+import "github.com/aavzz/notifier"
+
+//NotifySMS sends an SMS via notifyd
+//notifyd (string) - notifyd https URL (e.g. "https://notifyd.somewhere.com/api1")
+//channel (string) - name of the SMS gateway (e.d. beeline)
+//phones (string) - comma-separatel list of cell-phones in international format (e.g. +71231234567,+71231234568)
+//message (string) - message to send
+err := NotifySMS(notifyd, channel, phones, message)
+
+//NotifyTelegram sends a message via a notifyd telegram bot
+//notifyd (string) - notifyd https URL (e.g. "https://notifyd.somewhere.com/api1")
+//group (string) - name os the group to send message to (as in the notifyd configuration file)
+//message (string) - message to send
+err := NotifyTelegram(notifyd, group, message)
+
+//NotifyEmail sends a message via a notifyd email facility
+//notifyd (string) - notifyd https URL (e.g. "https://notifyd.somewhere.com/api1")
+//recipients (string) - comma-separated list of email addresses
+//subject (string) - message subject
+//sender_name (string) - message sender name
+//sender_address (string) - message sendet email address
+//message (string) - message to send
+
+err := NotifyEmail(notifyd, recipients, subject, sender_name, sender_address, message)
+```
