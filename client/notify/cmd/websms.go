@@ -4,7 +4,7 @@ import (
 	"github.com/aavzz/misc/pipe"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.con/aavzz/notifier"
+	"github.com/aavzz/notifier"
 	"io/ioutil"
 	"log"
 )
