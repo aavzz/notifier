@@ -5,7 +5,6 @@ import (
 	"github.com/aavzz/notifier"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"io/ioutil"
 	"log"
 )
 
@@ -24,7 +23,7 @@ func beelineCommand(cmd *cobra.Command, args []string) {
 		log.Fatal(err.Error())
 	}
 
-	err := notifier.NotifySMS(viper.GetString("beeline.url"), "beeline", viper.GetString("beeline.recipients"), message)
+	err = notifier.NotifySMS(viper.GetString("beeline.url"), "beeline", viper.GetString("beeline.recipients"), message)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
