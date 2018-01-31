@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"net/url"
 	"errors"
+	"io/ioutil"
+	"github.com/aavzz/daemon/log"
 )
 
 //Must be exportable (used for notifier response)
