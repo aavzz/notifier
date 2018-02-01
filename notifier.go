@@ -25,11 +25,6 @@ type NotifierResponse struct {
 //phones - comma-separatel list of cell-phones in international format (e.g. +71231234567,+71231234568)
 //message - message to send
 func NotifySMS(notifyd, channel, phones, message string) error {
-
-	log.Info(notifyd)
-	log.Info(channel)
-	log.Info(phones)
-	log.Info(message)
 	
 	params := url.Values{
 		"channel":    {channel},
