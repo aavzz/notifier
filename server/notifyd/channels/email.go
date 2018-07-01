@@ -12,8 +12,8 @@ func SendMessageEmail(senderName, senderAddress, recipients, subject, message st
 	emails := re.FindAllString(recipients, -1)
 	senderAddr := re.FindAllString(senderAddress, 1)
 	l := len(message)
-	if l > 1000 {
-		l = 1000
+	if l > 10000 {
+		l = 10000
 	}
 	message = message[:l]
 
